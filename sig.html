@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #020617;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #fff;
+}
+
+.box {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 10px;
+  width: 320px;
+  text-align: center;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: none;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #22c55e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+a {
+  color: #38bdf8;
+  display: block;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Create Account</h2>
+
+  <input type="text" id="username" placeholder="Username">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+
+  <select id="role">
+    <option value="customer">Customer</option>
+    <option value="admin">Admin</option>
+  </select>
+
+  <button onclick="signup()">Sign Up</button>
+
+  <a href="login.html">Back to Login</a>
+</div>
+
+<script>
+function signup() {
+  let username = document.getElementById("username").value;
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
+  let role = document.getElementById("role").value;
+
+  // Validation
+  if(username === "" || email === "" || password === ""){
+    alert("Please fill all fields");
+    return;
+  }
+
+  // Create user object
+  let user = {
+    username: username,
+    email: email,
+    password: password,
+    role: role
+  };
+
+  // Save to localStorage
+  localStorage.setItem("user", JSON.stringify(user));
+
+  alert("Account Created Successfully!");
+
+  // Redirect to login
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

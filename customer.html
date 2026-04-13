@@ -1,0 +1,2152 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard - Tecko</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        :root {
+            --primary: #0066FF;
+            --secondary: #7C3AED;
+            --accent: #F59E0B;
+            --success: #10B981;
+            --danger: #EF4444;
+            --dark: #0a0a0a;
+            --darker: #050505;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 102, 255, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(0, 102, 255, 0.6); }
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes slide-in-left {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes modal-in {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+        .animate-gradient { background-size: 200% 200%; animation: gradient-shift 8s ease infinite; }
+        .animate-slide-in { animation: slide-in-left 0.5s ease-out; }
+        .animate-fade-in { animation: fade-in 0.5s ease-out; }
+        .animate-modal-in { animation: modal-in 0.3s ease-out; }
+        .animate-slide-up { animation: slide-up 0.4s ease-out; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .glass-strong {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #0066FF, #7C3AED, #F59E0B);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 4s ease infinite;
+        }
+        
+        .sidebar-link {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .sidebar-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(to bottom, #0066FF, #7C3AED);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar-link:hover::before,
+        .sidebar-link.active::before {
+            transform: scaleY(1);
+        }
+        
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: rgba(0, 102, 255, 0.1);
+            color: #0066FF;
+        }
+        
+        .stat-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.15);
+            border-color: rgba(0, 102, 255, 0.3);
+        }
+        
+        .widget-card {
+            transition: all 0.3s ease;
+        }
+        
+        .widget-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-bar {
+            transition: width 1s ease-out;
+        }
+        
+        .calendar-day {
+            transition: all 0.2s ease;
+        }
+        
+        .calendar-day:hover:not(.empty):not(.disabled) {
+            background: rgba(0, 102, 255, 0.2);
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+        
+        .calendar-day.active {
+            background: linear-gradient(135deg, #0066FF, #7C3AED);
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
+        }
+        
+        .calendar-day.leave {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+        }
+        
+        .calendar-day.holiday {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.5);
+        }
+        
+        .team-avatar {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .team-avatar:hover {
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
+        }
+        
+        .quick-action {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .quick-action:hover {
+            transform: translateY(-3px);
+            background: rgba(0, 102, 255, 0.1);
+            border-color: rgba(0, 102, 255, 0.3);
+        }
+        
+        .quick-action:active {
+            transform: scale(0.98);
+        }
+        
+        .notification-badge {
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
+        
+        .pulse-dot {
+            animation: pulse-dot 2s infinite;
+        }
+        
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            transform: scale(0.95);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        /* View Transitions */
+        .view-section {
+            display: none;
+            animation: fade-in 0.4s ease-out;
+        }
+        
+        .view-section.active {
+            display: block;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #0066FF, #7C3AED);
+            border-radius: 4px;
+        }
+        
+        .dropdown-menu {
+            transform-origin: top right;
+            transition: all 0.2s ease-out;
+        }
+        
+        .dropdown-menu.hidden {
+            transform: scale(0.95);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .dropdown-menu:not(.hidden) {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .time-off-card {
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid rgba(0, 102, 255, 0.2);
+        }
+        
+        .payslip-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .performance-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.1));
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .nav-tab {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .nav-tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .nav-tab.active {
+            background: rgba(0, 102, 255, 0.2);
+            border-color: rgba(0, 102, 255, 0.5);
+            color: #0066FF;
+        }
+        
+        .back-button {
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            transform: translateX(-3px);
+        }
+    </style>
+</head>
+<body class="bg-[#050505] text-white overflow-hidden">
+
+    <!-- Modal Overlay -->
+    <div id="modal-overlay" class="modal-overlay items-center justify-center p-4">
+        <div class="modal-content glass-strong border border-gray-800 rounded-2xl max-w-md w-full p-6 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div id="modal-body">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 glass-strong border-r border-gray-800 flex flex-col transition-all duration-300 z-50">
+            <!-- Logo -->
+            <div class="p-6 flex items-center gap-3 border-b border-gray-800 cursor-pointer" onclick="navigateTo('dashboard')">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center animate-pulse-glow">
+                    <i data-lucide="hexagon" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <span class="font-bold text-xl tracking-tight">Stackly</span>
+                    <span class="text-xs text-gray-500 block">Employee Portal</span>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+                <div class="px-3 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">My Workspace</div>
+                
+                <a onclick="navigateTo('dashboard')" class="sidebar-link active flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-white" data-view="dashboard">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                    Dashboard
+                </a>
+                
+                <a onclick="navigateTo('timeoff')" class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white" data-view="timeoff">
+                    <i data-lucide="calendar" class="w-5 h-5"></i>
+                    Time Off
+                    <span class="ml-auto bg-blue-500/20 text-blue-400 text-xs px-2 py-0.5 rounded-full">3</span>
+                </a>
+                
+                <a onclick="navigateTo('payslips')" class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white" data-view="payslips">
+                    <i data-lucide="file-text" class="w-5 h-5"></i>
+                    Payslips
+                </a>
+                
+                <a onclick="navigateTo('performance')" class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white" data-view="performance">
+                    <i data-lucide="target" class="w-5 h-5"></i>
+                    Performance
+                </a>
+
+                <div class="px-3 mt-6 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Team</div>
+                
+                <a onclick="navigateTo('directory')" class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white" data-view="directory">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                    Directory
+                </a>
+                
+                <a onclick="navigateTo('messages')" class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white" data-view="messages">
+                    <i data-lucide="message-square" class="w-5 h-5"></i>
+                    Messages
+                    <span class="ml-auto bg-red-500/20 text-red-400 text-xs px-2 py-0.5 rounded-full">5</span>
+                </a>
+                
+                <a onclick="navigateTo('documents')" class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white" data-view="documents">
+                    <i data-lucide="folder-open" class="w-5 h-5"></i>
+                    Documents
+                </a>
+
+                <div class="px-3 mt-6 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Company</div>
+                
+                <a onclick="navigateTo('announcements')" class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white" data-view="announcements">
+                    <i data-lucide="announcement" class="w-5 h-5"></i>
+                    Announcements
+                </a>
+                
+                <a onclick="navigateTo('policies')" class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white" data-view="policies">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                    Policies
+                </a>
+                
+                <a onclick="navigateTo('support')" class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white" data-view="support">
+                    <i data-lucide="help-circle" class="w-5 h-5"></i>
+                    Support
+                </a>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="p-4 border-t border-gray-800">
+                <div onclick="navigateTo('profile')" class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer group">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" class="w-10 h-10 rounded-full ring-2 ring-blue-500/50" alt="Employee">
+                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#050505] pulse-dot"></div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-white truncate">Alex Morgan</p>
+                        <p class="text-xs text-gray-500 truncate">Senior Developer</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-500 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col overflow-hidden relative">
+            <!-- Background Effects -->
+            <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Header -->
+            <header class="glass-strong border-b border-gray-800 px-8 py-4 flex items-center justify-between z-40">
+                <div class="flex items-center gap-4">
+                    <button id="sidebar-toggle" class="p-2 rounded-lg hover:bg-white/10 transition-colors lg:hidden">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                    <div id="header-content">
+                        <h1 class="text-2xl font-bold">Welcome back, Alex! 👋</h1>
+                        <p class="text-sm text-gray-500">Here's what's happening today</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <!-- Search -->
+                    <div class="relative hidden md:block">
+                        <i data-lucide="search" class="w-5 h-5 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                        <input type="text" placeholder="Search..." 
+                               class="bg-[#111] border border-gray-800 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 transition-all w-64">
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="relative">
+                        <button id="notif-btn" class="relative p-2 rounded-xl hover:bg-white/10 transition-colors">
+                            <i data-lucide="bell" class="w-5 h-5 text-gray-400"></i>
+                            <span class="notification-badge absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </button>
+                        
+                        <!-- Dropdown -->
+                        <div id="notif-dropdown" class="dropdown-menu hidden absolute right-0 mt-2 w-80 glass-strong border border-gray-800 rounded-2xl shadow-2xl z-50">
+                            <div class="p-4 border-b border-gray-800 flex items-center justify-between">
+                                <h3 class="font-semibold">Notifications</h3>
+                                <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full">3 new</span>
+                            </div>
+                            <div class="max-h-64 overflow-y-auto">
+                                <div onclick="showNotificationDetail('leave-approved')" class="p-4 hover:bg-white/5 cursor-pointer border-l-2 border-blue-500">
+                                    <div class="flex items-start gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                                            <i data-lucide="calendar" class="w-4 h-4 text-blue-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium">Leave Approved</p>
+                                            <p class="text-xs text-gray-500 mt-1">Your PTO request for Apr 15-17 was approved</p>
+                                            <p class="text-xs text-gray-600 mt-1">10 min ago</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div onclick="showNotificationDetail('payslip-ready')" class="p-4 hover:bg-white/5 cursor-pointer border-l-2 border-transparent">
+                                    <div class="flex items-start gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                            <i data-lucide="dollar-sign" class="w-4 h-4 text-green-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium">Payslip Ready</p>
+                                            <p class="text-xs text-gray-500 mt-1">March 2024 payslip is now available</p>
+                                            <p class="text-xs text-gray-600 mt-1">2 hours ago</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div onclick="showNotificationDetail('review-due')" class="p-4 hover:bg-white/5 cursor-pointer border-l-2 border-transparent">
+                                    <div class="flex items-start gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                                            <i data-lucide="star" class="w-4 h-4 text-amber-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium">Review Due</p>
+                                            <p class="text-xs text-gray-500 mt-1">Quarterly performance review due Friday</p>
+                                            <p class="text-xs text-gray-600 mt-1">1 day ago</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3 border-t border-gray-800">
+                                <button onclick="navigateTo('notifications')" class="w-full text-center text-sm text-blue-500 hover:text-blue-400 transition-colors">View All Notifications</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings -->
+                    <button onclick="navigateTo('settings')" class="p-2 rounded-xl hover:bg-white/10 transition-colors">
+                        <i data-lucide="settings" class="w-5 h-5 text-gray-400"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- DASHBOARD VIEW -->
+            <div id="view-dashboard" class="view-section active flex-1 overflow-y-auto p-8 scroll-smooth">
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <button onclick="openTimeOffModal()" class="quick-action glass rounded-2xl p-4 border border-gray-800 text-left group">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <i data-lucide="calendar-plus" class="w-6 h-6 text-blue-500"></i>
+                        </div>
+                        <p class="font-semibold text-sm">Request Time Off</p>
+                        <p class="text-xs text-gray-500 mt-1">3 days available</p>
+                    </button>
+                    
+                    <button onclick="navigateTo('payslips')" class="quick-action glass rounded-2xl p-4 border border-gray-800 text-left group">
+                        <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <i data-lucide="file-check" class="w-6 h-6 text-green-500"></i>
+                        </div>
+                        <p class="font-semibold text-sm">View Payslip</p>
+                        <p class="text-xs text-gray-500 mt-1">March 2024</p>
+                    </button>
+                    
+                    <button onclick="openClockInModal()" class="quick-action glass rounded-2xl p-4 border border-gray-800 text-left group">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <i data-lucide="clock" class="w-6 h-6 text-purple-500"></i>
+                        </div>
+                        <p class="font-semibold text-sm">Clock In</p>
+                        <p class="text-xs text-gray-500 mt-1">Start your shift</p>
+                    </button>
+                    
+                    <button onclick="openSupportTicket()" class="quick-action glass rounded-2xl p-4 border border-gray-800 text-left group">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <i data-lucide="ticket" class="w-6 h-6 text-amber-500"></i>
+                        </div>
+                        <p class="font-semibold text-sm">Submit Ticket</p>
+                        <p class="text-xs text-gray-500 mt-1">IT Support</p>
+                    </button>
+                </div>
+
+                <!-- Main Grid -->
+                <div class="grid lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Left Column -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Attendance Chart -->
+                        <div class="glass rounded-2xl p-6 border border-gray-800 animate-fade-in">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold">Attendance Overview</h3>
+                                    <p class="text-sm text-gray-500">Your check-in patterns this month</p>
+                                </div>
+                                <select class="bg-[#111] border border-gray-800 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-blue-500">
+                                    <option>This Month</option>
+                                    <option>Last Month</option>
+                                    <option>This Year</option>
+                                </select>
+                            </div>
+                            <div class="h-64">
+                                <canvas id="attendanceChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Team Members -->
+                        <div class="glass rounded-2xl p-6 border border-gray-800 animate-fade-in">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold">My Team</h3>
+                                    <p class="text-sm text-gray-500">Engineering Department</p>
+                                </div>
+                                <button onclick="navigateTo('directory')" class="text-sm text-blue-500 hover:text-blue-400 transition-colors">View All</button>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div onclick="viewTeamMember('sarah')" class="text-center group cursor-pointer">
+                                    <div class="relative inline-block mb-2">
+                                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" class="team-avatar w-16 h-16 rounded-full ring-2 ring-gray-800" alt="Team Member">
+                                        <div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-[#050505]"></div>
+                                    </div>
+                                    <p class="font-medium text-sm">Sarah Chen</p>
+                                    <p class="text-xs text-gray-500">Team Lead</p>
+                                </div>
+                                
+                                <div onclick="viewTeamMember('mike')" class="text-center group cursor-pointer">
+                                    <div class="relative inline-block mb-2">
+                                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" class="team-avatar w-16 h-16 rounded-full ring-2 ring-gray-800" alt="Team Member">
+                                        <div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-[#050505]"></div>
+                                    </div>
+                                    <p class="font-medium text-sm">Mike Ross</p>
+                                    <p class="text-xs text-gray-500">Developer</p>
+                                </div>
+                                
+                                <div onclick="viewTeamMember('emma')" class="text-center group cursor-pointer">
+                                    <div class="relative inline-block mb-2">
+                                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face" class="team-avatar w-16 h-16 rounded-full ring-2 ring-gray-800" alt="Team Member">
+                                        <div class="absolute bottom-0 right-0 w-4 h-4 bg-amber-500 rounded-full border-2 border-[#050505]"></div>
+                                    </div>
+                                    <p class="font-medium text-sm">Emma Wilson</p>
+                                    <p class="text-xs text-gray-500">Designer</p>
+                                </div>
+                                
+                                <div onclick="viewTeamMember('david')" class="text-center group cursor-pointer">
+                                    <div class="relative inline-block mb-2">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" class="team-avatar w-16 h-16 rounded-full ring-2 ring-gray-800" alt="Team Member">
+                                        <div class="absolute bottom-0 right-0 w-4 h-4 bg-gray-500 rounded-full border-2 border-[#050505]"></div>
+                                    </div>
+                                    <p class="font-medium text-sm">David Kim</p>
+                                    <p class="text-xs text-gray-500">DevOps</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Announcements -->
+                        <div class="glass rounded-2xl p-6 border border-gray-800 animate-fade-in">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold">Company Announcements</h3>
+                                    <p class="text-sm text-gray-500">Latest updates from HR</p>
+                                </div>
+                                <button onclick="navigateTo('announcements')" class="text-sm text-blue-500 hover:text-blue-400 transition-colors">View All</button>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div onclick="viewAnnouncement('team-building')" class="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer group">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                                            <i data-lucide="party-popper" class="w-5 h-5 text-blue-500"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-center justify-between mb-1">
+                                                <h4 class="font-semibold text-sm group-hover:text-blue-500 transition-colors">Quarterly Team Building Event</h4>
+                                                <span class="text-xs text-gray-500">2h ago</span>
+                                            </div>
+                                            <p class="text-sm text-gray-400">Join us for our Q2 team building event at Golden Gate Park this Friday. Lunch will be provided!</p>
+                                            <div class="flex gap-2 mt-3">
+                                                <span class="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded">Event</span>
+                                                <span class="text-xs bg-gray-700 text-gray-400 px-2 py-1 rounded">All Hands</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div onclick="viewAnnouncement('remote-policy')" class="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer group">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                            <i data-lucide="leaf" class="w-5 h-5 text-green-500"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-center justify-between mb-1">
+                                                <h4 class="font-semibold text-sm group-hover:text-green-500 transition-colors">New Remote Work Policy</h4>
+                                                <span class="text-xs text-gray-500">1d ago</span>
+                                            </div>
+                                            <p class="text-sm text-gray-400">Updated guidelines for hybrid work arrangements effective May 1st. Please review the documentation.</p>
+                                            <div class="flex gap-2 mt-3">
+                                                <span class="text-xs bg-green-500/10 text-green-400 px-2 py-1 rounded">Policy</span>
+                                                <span class="text-xs bg-gray-700 text-gray-400 px-2 py-1 rounded">HR</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="space-y-6">
+                        <!-- Mini Calendar -->
+                        <div class="glass rounded-2xl p-6 border border-gray-800 animate-fade-in">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold">April 2026</h3>
+                                <div class="flex gap-2">
+                                    <button class="p-1 rounded hover:bg-white/10 transition-colors">
+                                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                                    </button>
+                                    <button class="p-1 rounded hover:bg-white/10 transition-colors">
+                                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-7 gap-1 text-center text-xs mb-2">
+                                <span class="text-gray-500">S</span>
+                                <span class="text-gray-500">M</span>
+                                <span class="text-gray-500">T</span>
+                                <span class="text-gray-500">W</span>
+                                <span class="text-gray-500">T</span>
+                                <span class="text-gray-500">F</span>
+                                <span class="text-gray-500">S</span>
+                            </div>
+                            
+                            <div class="grid grid-cols-7 gap-1 text-center text-sm">
+                                <span class="calendar-day empty p-2 text-gray-600">30</span>
+                                <span class="calendar-day empty p-2 text-gray-600">31</span>
+                                <span class="calendar-day p-2 rounded-lg">1</span>
+                                <span class="calendar-day p-2 rounded-lg">2</span>
+                                <span class="calendar-day p-2 rounded-lg">3</span>
+                                <span class="calendar-day p-2 rounded-lg">4</span>
+                                <span class="calendar-day p-2 rounded-lg">5</span>
+                                <span class="calendar-day p-2 rounded-lg">6</span>
+                                <span class="calendar-day p-2 rounded-lg">7</span>
+                                <span class="calendar-day p-2 rounded-lg">8</span>
+                                <span class="calendar-day p-2 rounded-lg">9</span>
+                                <span class="calendar-day p-2 rounded-lg">10</span>
+                                <span class="calendar-day p-2 rounded-lg">11</span>
+                                <span class="calendar-day p-2 rounded-lg">12</span>
+                                <span class="calendar-day active p-2 rounded-lg font-bold text-white">13</span>
+                                <span class="calendar-day p-2 rounded-lg">14</span>
+                                <span onclick="openTimeOffModal()" class="calendar-day leave p-2 rounded-lg text-green-400 font-medium cursor-pointer">15</span>
+                                <span onclick="openTimeOffModal()" class="calendar-day leave p-2 rounded-lg text-green-400 font-medium cursor-pointer">16</span>
+                                <span onclick="openTimeOffModal()" class="calendar-day leave p-2 rounded-lg text-green-400 font-medium cursor-pointer">17</span>
+                                <span class="calendar-day p-2 rounded-lg">18</span>
+                                <span class="calendar-day p-2 rounded-lg">19</span>
+                                <span class="calendar-day p-2 rounded-lg">20</span>
+                                <span class="calendar-day p-2 rounded-lg">21</span>
+                                <span class="calendar-day p-2 rounded-lg">22</span>
+                                <span class="calendar-day p-2 rounded-lg">23</span>
+                                <span class="calendar-day p-2 rounded-lg">24</span>
+                                <span class="calendar-day p-2 rounded-lg">25</span>
+                                <span class="calendar-day holiday p-2 rounded-lg text-amber-400 font-medium">26</span>
+                                <span class="calendar-day p-2 rounded-lg">27</span>
+                                <span class="calendar-day p-2 rounded-lg">28</span>
+                                <span class="calendar-day p-2 rounded-lg">29</span>
+                                <span class="calendar-day p-2 rounded-lg">30</span>
+                            </div>
+                            
+                            <div class="mt-4 pt-4 border-t border-gray-800 flex gap-4 text-xs">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500"></div>
+                                    <span class="text-gray-400">PTO</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-amber-500/20 border border-amber-500"></div>
+                                    <span class="text-gray-400">Holiday</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Time Off Balance -->
+                        <div class="time-off-card rounded-2xl p-6 animate-fade-in cursor-pointer" onclick="navigateTo('timeoff')">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold">Time Off Balance</h3>
+                                <i data-lucide="umbrella" class="w-5 h-5 text-blue-500"></i>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-2">
+                                        <span class="text-gray-400">Vacation</span>
+                                        <span class="font-semibold">12 days</span>
+                                    </div>
+                                    <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                                        <div class="h-full bg-blue-500 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between text-sm mb-2">
+                                        <span class="text-gray-400">Sick Leave</span>
+                                        <span class="font-semibold">8 days</span>
+                                    </div>
+                                    <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                                        <div class="h-full bg-purple-500 rounded-full" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between text-sm mb-2">
+                                        <span class="text-gray-400">Personal</span>
+                                        <span class="font-semibold">3 days</span>
+                                    </div>
+                                    <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                                        <div class="h-full bg-amber-500 rounded-full" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button onclick="event.stopPropagation(); openTimeOffModal()" class="w-full mt-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 transition-colors text-sm font-medium">
+                                Request Time Off
+                            </button>
+                        </div>
+
+                        <!-- Recent Payslip -->
+                        <div class="payslip-card rounded-2xl p-6 animate-fade-in cursor-pointer" onclick="navigateTo('payslips')">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold">Latest Payslip</h3>
+                                <i data-lucide="file-text" class="w-5 h-5 text-green-500"></i>
+                            </div>
+                            
+                            <div class="text-center mb-4">
+                                <p class="text-3xl font-bold text-green-400">$8,450.00</p>
+                                <p class="text-sm text-gray-500">March 2024</p>
+                            </div>
+                            
+                            <div class="space-y-2 text-sm mb-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Base Salary</span>
+                                    <span>$8,000.00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Bonus</span>
+                                    <span class="text-green-400">+$500.00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Deductions</span>
+                                    <span class="text-red-400">-$50.00</span>
+                                </div>
+                            </div>
+                            
+                            <button onclick="event.stopPropagation(); downloadPayslip()" class="w-full py-2.5 rounded-xl border border-green-500/30 hover:bg-green-500/10 transition-colors text-sm font-medium text-green-400">
+                                Download PDF
+                            </button>
+                        </div>
+
+                        <!-- Performance Summary -->
+                        <div class="performance-card rounded-2xl p-6 animate-fade-in cursor-pointer" onclick="navigateTo('performance')">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold">Performance</h3>
+                                <i data-lucide="trending-up" class="w-5 h-5 text-amber-500"></i>
+                            </div>
+                            
+                            <div class="flex items-center justify-center mb-4">
+                                <div class="relative w-24 h-24">
+                                    <svg class="w-full h-full transform -rotate-90">
+                                        <circle cx="48" cy="48" r="40" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="none"/>
+                                        <circle cx="48" cy="48" r="40" stroke="#F59E0B" stroke-width="8" fill="none" stroke-dasharray="251.2" stroke-dashoffset="62.8" stroke-linecap="round"/>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-2xl font-bold">85%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p class="text-center text-sm text-gray-400 mb-3">Q1 2024 Review</p>
+                            <div class="flex gap-2">
+                                <button onclick="event.stopPropagation(); navigateTo('performance')" class="flex-1 py-2 rounded-lg bg-amber-500/20 text-amber-400 text-xs font-medium hover:bg-amber-500/30 transition-colors">
+                                    View Details
+                                </button>
+                                <button onclick="event.stopPropagation(); navigateTo('performance-history')" class="flex-1 py-2 rounded-lg bg-white/5 text-gray-400 text-xs font-medium hover:bg-white/10 transition-colors">
+                                    History
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Events -->
+                        <div class="glass rounded-2xl p-6 border border-gray-800 animate-fade-in">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold">Upcoming</h3>
+                                <i data-lucide="calendar-clock" class="w-5 h-5 text-gray-500"></i>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <div onclick="viewEvent('standup')" class="flex gap-3 items-start p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
+                                    <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex flex-col items-center justify-center flex-shrink-0">
+                                        <span class="text-xs text-blue-400 font-bold">APR</span>
+                                        <span class="text-lg font-bold text-white">15</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-sm">Team Standup</p>
+                                        <p class="text-xs text-gray-500">10:00 AM • Zoom</p>
+                                    </div>
+                                </div>
+                                
+                                <div onclick="viewEvent('review')" class="flex gap-3 items-start p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
+                                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex flex-col items-center justify-center flex-shrink-0">
+                                        <span class="text-xs text-purple-400 font-bold">APR</span>
+                                        <span class="text-lg font-bold text-white">18</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-sm">Project Review</p>
+                                        <p class="text-xs text-gray-500">2:00 PM • Conference A</p>
+                                    </div>
+                                </div>
+                                
+                                <div onclick="viewEvent('oneonone')" class="flex gap-3 items-start p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
+                                    <div class="w-12 h-12 rounded-xl bg-green-500/20 flex flex-col items-center justify-center flex-shrink-0">
+                                        <span class="text-xs text-green-400 font-bold">APR</span>
+                                        <span class="text-lg font-bold text-white">20</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-sm">1:1 with Sarah</p>
+                                        <p class="text-xs text-gray-500">11:00 AM • Office</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="text-center text-sm text-gray-600 pb-4">
+                    <p>&copy; 2024 Tecko Employee Portal. All rights reserved.</p>
+                </footer>
+            </div>
+
+            <!-- TIMEOFF VIEW -->
+            <div id="view-timeoff" class="view-section flex-1 overflow-y-auto p-8 scroll-smooth">
+                <div class="max-w-4xl mx-auto">
+                    <button onclick="navigateTo('dashboard')" class="back-button flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Back to Dashboard
+                    </button>
+                    
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h1 class="text-3xl font-bold mb-2">Time Off</h1>
+                            <p class="text-gray-500">Manage your leave requests and balances</p>
+                        </div>
+                        <button onclick="openTimeOffModal()" class="btn-primary bg-blue-600 px-6 py-3 rounded-xl font-medium flex items-center gap-2">
+                            <i data-lucide="plus" class="w-5 h-5"></i>
+                            New Request
+                        </button>
+                    </div>
+
+                    <!-- Balance Cards -->
+                    <div class="grid md:grid-cols-3 gap-6 mb-8">
+                        <div class="glass rounded-2xl p-6 border border-gray-800 text-center">
+                            <div class="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="sun" class="w-8 h-8 text-blue-500"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold text-blue-400 mb-1">12</h3>
+                            <p class="text-gray-400">Vacation Days</p>
+                        </div>
+                        
+                        <div class="glass rounded-2xl p-6 border border-gray-800 text-center">
+                            <div class="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="heart-pulse" class="w-8 h-8 text-purple-500"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold text-purple-400 mb-1">8</h3>
+                            <p class="text-gray-400">Sick Days</p>
+                        </div>
+                        
+                        <div class="glass rounded-2xl p-6 border border-gray-800 text-center">
+                            <div class="w-16 h-16 rounded-full bg-amber-500/20 flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="user" class="w-8 h-8 text-amber-500"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold text-amber-400 mb-1">3</h3>
+                            <p class="text-gray-400">Personal Days</p>
+                        </div>
+                    </div>
+
+                    <!-- Requests Table -->
+                    <div class="glass rounded-2xl border border-gray-800 overflow-hidden">
+                        <div class="p-6 border-b border-gray-800">
+                            <h3 class="text-lg font-semibold">Recent Requests</h3>
+                        </div>
+                        <table class="w-full">
+                            <thead class="bg-white/5">
+                                <tr>
+                                    <th class="text-left text-xs font-semibold text-gray-400 uppercase px-6 py-4">Type</th>
+                                    <th class="text-left text-xs font-semibold text-gray-400 uppercase px-6 py-4">Dates</th>
+                                    <th class="text-left text-xs font-semibold text-gray-400 uppercase px-6 py-4">Days</th>
+                                    <th class="text-left text-xs font-semibold text-gray-400 uppercase px-6 py-4">Status</th>
+                                    <th class="text-left text-xs font-semibold text-gray-400 uppercase px-6 py-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-800">
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="sun" class="w-5 h-5 text-blue-500"></i>
+                                            <span>Vacation</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-400">Apr 15-17, 2026</td>
+                                    <td class="px-6 py-4">3 days</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400">Approved</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button onclick="viewRequest('apr15')" class="text-blue-500 hover:text-blue-400 text-sm">View</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="heart-pulse" class="w-5 h-5 text-purple-500"></i>
+                                            <span>Sick Leave</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-400">Mar 22, 2026</td>
+                                    <td class="px-6 py-4">1 day</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400">Approved</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button onclick="viewRequest('mar22')" class="text-blue-500 hover:text-blue-400 text-sm">View</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="sun" class="w-5 h-5 text-blue-500"></i>
+                                            <span>Vacation</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-400">May 5-9, 2026</td>
+                                    <td class="px-6 py-4">5 days</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-amber-500/20 text-amber-400">Pending</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button onclick="cancelRequest('may5')" class="text-red-500 hover:text-red-400 text-sm">Cancel</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAYSLIPS VIEW -->
+            <div id="view-payslips" class="view-section flex-1 overflow-y-auto p-8 scroll-smooth">
+                <div class="max-w-4xl mx-auto">
+                    <button onclick="navigateTo('dashboard')" class="back-button flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Back to Dashboard
+                    </button>
+                    
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h1 class="text-3xl font-bold mb-2">Payslips</h1>
+                            <p class="text-gray-500">View and download your payment history</p>
+                        </div>
+                        <select class="bg-[#111] border border-gray-800 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-blue-500">
+                            <option>2026</option>
+                            <option>2025</option>
+                            <option>2024</option>
+                        </select>
+                    </div>
+
+                    <div class="grid gap-4">
+                        <div onclick="viewPayslip('mar2026')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-green-500/50 transition-all cursor-pointer group">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-14 h-14 rounded-xl bg-green-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="file-text" class="w-7 h-7 text-green-500"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold group-hover:text-green-400 transition-colors">March 2026</h3>
+                                        <p class="text-sm text-gray-500">Paid on Apr 1, 2026</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-green-400">$8,450.00</p>
+                                    <div class="flex items-center gap-2 mt-1 text-sm text-gray-500">
+                                        <i data-lucide="download" class="w-4 h-4"></i>
+                                        <span>PDF</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div onclick="viewPayslip('feb2026')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-green-500/50 transition-all cursor-pointer group">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-14 h-14 rounded-xl bg-green-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="file-text" class="w-7 h-7 text-green-500"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold group-hover:text-green-400 transition-colors">February 2026</h3>
+                                        <p class="text-sm text-gray-500">Paid on Mar 1, 2026</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-green-400">$8,200.00</p>
+                                    <div class="flex items-center gap-2 mt-1 text-sm text-gray-500">
+                                        <i data-lucide="download" class="w-4 h-4"></i>
+                                        <span>PDF</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div onclick="viewPayslip('jan2026')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-green-500/50 transition-all cursor-pointer group">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-14 h-14 rounded-xl bg-green-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="file-text" class="w-7 h-7 text-green-500"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold group-hover:text-green-400 transition-colors">January 2026</h3>
+                                        <p class="text-sm text-gray-500">Paid on Feb 1, 2026</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-green-400">$8,000.00</p>
+                                    <div class="flex items-center gap-2 mt-1 text-sm text-gray-500">
+                                        <i data-lucide="download" class="w-4 h-4"></i>
+                                        <span>PDF</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PERFORMANCE VIEW -->
+            <div id="view-performance" class="view-section flex-1 overflow-y-auto p-8 scroll-smooth">
+                <div class="max-w-4xl mx-auto">
+                    <button onclick="navigateTo('dashboard')" class="back-button flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Back to Dashboard
+                    </button>
+                    
+                    <h1 class="text-3xl font-bold mb-2">Performance Review</h1>
+                    <p class="text-gray-500 mb-8">Track your goals and review history</p>
+
+                    <div class="glass rounded-2xl p-8 border border-gray-800 mb-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 class="text-2xl font-bold mb-1">Q1 2026 Review</h2>
+                                <p class="text-gray-500">Completed on March 31, 2026</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="relative w-20 h-20 mx-auto mb-2">
+                                    <svg class="w-full h-full transform -rotate-90">
+                                        <circle cx="40" cy="40" r="35" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none"/>
+                                        <circle cx="40" cy="40" r="35" stroke="#F59E0B" stroke-width="6" fill="none" stroke-dasharray="220" stroke-dashoffset="33" stroke-linecap="round"/>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-xl font-bold">85%</span>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-amber-400 font-medium">Exceeds Expectations</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">Technical Skills</span>
+                                    <span class="text-amber-400">90%</span>
+                                </div>
+                                <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-amber-500 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">Communication</span>
+                                    <span class="text-amber-400">80%</span>
+                                </div>
+                                <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-amber-500 rounded-full" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">Teamwork</span>
+                                    <span class="text-amber-400">85%</span>
+                                </div>
+                                <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-amber-500 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 rounded-xl bg-white/5">
+                            <h4 class="font-semibold mb-2">Manager Feedback</h4>
+                            <p class="text-gray-400 text-sm">"Alex has consistently delivered high-quality work this quarter. His technical contributions to the API Gateway project were exceptional. Recommended for senior role consideration."</p>
+                            <p class="text-sm text-gray-500 mt-2">— Sarah Chen, Engineering Manager</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIRECTORY VIEW -->
+            <div id="view-directory" class="view-section flex-1 overflow-y-auto p-8 scroll-smooth">
+                <div class="max-w-6xl mx-auto">
+                    <button onclick="navigateTo('dashboard')" class="back-button flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Back to Dashboard
+                    </button>
+                    
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h1 class="text-3xl font-bold mb-2">Team Directory</h1>
+                            <p class="text-gray-500">Find and connect with colleagues</p>
+                        </div>
+                        <div class="relative">
+                            <i data-lucide="search" class="w-5 h-5 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                            <input type="text" placeholder="Search employees..." 
+                                   class="bg-[#111] border border-gray-800 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 transition-all w-64">
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div onclick="viewEmployee('sarah')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-blue-500/50 transition-all cursor-pointer group">
+                            <div class="flex items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" class="w-16 h-16 rounded-full ring-2 ring-gray-800 group-hover:ring-blue-500/50 transition-all" alt="">
+                                <div>
+                                    <h3 class="font-semibold group-hover:text-blue-400 transition-colors">Sarah Chen</h3>
+                                    <p class="text-sm text-gray-500">Engineering Manager</p>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                        <span class="text-xs text-gray-400">Online</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 mt-4">
+                                <button onclick="event.stopPropagation(); sendMessage('sarah')" class="flex-1 py-2 rounded-lg bg-blue-500/20 text-blue-400 text-sm hover:bg-blue-500/30 transition-colors">Message</button>
+                                <button onclick="event.stopPropagation(); viewProfile('sarah')" class="flex-1 py-2 rounded-lg bg-white/5 text-gray-400 text-sm hover:bg-white/10 transition-colors">Profile</button>
+                            </div>
+                        </div>
+
+                        <div onclick="viewEmployee('mike')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-blue-500/50 transition-all cursor-pointer group">
+                            <div class="flex items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" class="w-16 h-16 rounded-full ring-2 ring-gray-800 group-hover:ring-blue-500/50 transition-all" alt="">
+                                <div>
+                                    <h3 class="font-semibold group-hover:text-blue-400 transition-colors">Mike Ross</h3>
+                                    <p class="text-sm text-gray-500">Senior Developer</p>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                        <span class="text-xs text-gray-400">Online</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 mt-4">
+                                <button onclick="event.stopPropagation(); sendMessage('mike')" class="flex-1 py-2 rounded-lg bg-blue-500/20 text-blue-400 text-sm hover:bg-blue-500/30 transition-colors">Message</button>
+                                <button onclick="event.stopPropagation(); viewProfile('mike')" class="flex-1 py-2 rounded-lg bg-white/5 text-gray-400 text-sm hover:bg-white/10 transition-colors">Profile</button>
+                            </div>
+                        </div>
+
+                        <div onclick="viewEmployee('emma')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-blue-500/50 transition-all cursor-pointer group">
+                            <div class="flex items-center gap-4">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face" class="w-16 h-16 rounded-full ring-2 ring-gray-800 group-hover:ring-blue-500/50 transition-all" alt="">
+                                <div>
+                                    <h3 class="font-semibold group-hover:text-blue-400 transition-colors">Emma Wilson</h3>
+                                    <p class="text-sm text-gray-500">UI/UX Designer</p>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+                                        <span class="text-xs text-gray-400">Away</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 mt-4">
+                                <button onclick="event.stopPropagation(); sendMessage('emma')" class="flex-1 py-2 rounded-lg bg-blue-500/20 text-blue-400 text-sm hover:bg-blue-500/30 transition-colors">Message</button>
+                                <button onclick="event.stopPropagation(); viewProfile('emma')" class="flex-1 py-2 rounded-lg bg-white/5 text-gray-400 text-sm hover:bg-white/10 transition-colors">Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MESSAGES VIEW -->
+            <div id="view-messages" class="view-section flex-1 overflow-y-auto p-8 scroll-smooth">
+                <div class="max-w-4xl mx-auto">
+                    <button onclick="navigateTo('dashboard')" class="back-button flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Back to Dashboard
+                    </button>
+                    
+                    <h1 class="text-3xl font-bold mb-2">Messages</h1>
+                    <p class="text-gray-500 mb-8">Your conversations</p>
+
+                    <div class="glass rounded-2xl border border-gray-800 overflow-hidden">
+                        <div onclick="openChat('sarah')" class="flex items-center gap-4 p-4 hover:bg-white/5 transition-colors cursor-pointer border-b border-gray-800">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" class="w-12 h-12 rounded-full" alt="">
+                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#050505]"></span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-semibold">Sarah Chen</h3>
+                                    <span class="text-xs text-gray-500">10:30 AM</span>
+                                </div>
+                                <p class="text-sm text-gray-400">Can we review the project timeline?</p>
+                            </div>
+                            <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">2</span>
+                        </div>
+
+                        <div onclick="openChat('mike')" class="flex items-center gap-4 p-4 hover:bg-white/5 transition-colors cursor-pointer border-b border-gray-800">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" class="w-12 h-12 rounded-full" alt="">
+                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#050505]"></span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-semibold">Mike Ross</h3>
+                                    <span class="text-xs text-gray-500">Yesterday</span>
+                                </div>
+                                <p class="text-sm text-gray-400">Thanks for the help with the API!</p>
+                            </div>
+                        </div>
+
+                        <div onclick="openChat('emma')" class="flex items-center gap-4 p-4 hover:bg-white/5 transition-colors cursor-pointer">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face" class="w-12 h-12 rounded-full" alt="">
+                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-amber-500 rounded-full border-2 border-[#050505]"></span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-semibold">Emma Wilson</h3>
+                                    <span class="text-xs text-gray-500">2 days ago</span>
+                                </div>
+                                <p class="text-sm text-gray-400">Shared the new design mockups</p>
+                            </div>
+                            <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOCUMENTS VIEW -->
+            <div id="view-documents" class="view-section flex-1 overflow-y-auto p-8 scroll-smooth">
+                <div class="max-w-4xl mx-auto">
+                    <button onclick="navigateTo('dashboard')" class="back-button flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Back to Dashboard
+                    </button>
+                    
+                    <h1 class="text-3xl font-bold mb-2">Documents</h1>
+                    <p class="text-gray-500 mb-8">Your important documents and files</p>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div onclick="viewDocument('contract')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-blue-500/50 transition-all cursor-pointer group flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-xl bg-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i data-lucide="file-text" class="w-7 h-7 text-blue-500"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-semibold group-hover:text-blue-400 transition-colors">Employment Contract</h3>
+                                <p class="text-sm text-gray-500">PDF • 2.4 MB • Updated Jan 2026</p>
+                            </div>
+                            <i data-lucide="download" class="w-5 h-5 text-gray-500 group-hover:text-blue-400 transition-colors"></i>
+                        </div>
+
+                        <div onclick="viewDocument('tax')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-blue-500/50 transition-all cursor-pointer group flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-xl bg-green-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i data-lucide="file-text" class="w-7 h-7 text-green-500"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-semibold group-hover:text-green-400 transition-colors">Tax Documents 2025</h3>
+                                <p class="text-sm text-gray-500">PDF • 1.8 MB • Updated Feb 2026</p>
+                            </div>
+                            <i data-lucide="download" class="w-5 h-5 text-gray-500 group-hover:text-green-400 transition-colors"></i>
+                        </div>
+
+                        <div onclick="viewDocument('handbook')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-blue-500/50 transition-all cursor-pointer group flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i data-lucide="book" class="w-7 h-7 text-purple-500"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-semibold group-hover:text-purple-400 transition-colors">Employee Handbook</h3>
+                                <p class="text-sm text-gray-500">PDF • 5.2 MB • Updated Mar 2026</p>
+                            </div>
+                            <i data-lucide="download" class="w-5 h-5 text-gray-500 group-hover:text-purple-400 transition-colors"></i>
+                        </div>
+
+                        <div onclick="viewDocument('benefits')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-blue-500/50 transition-all cursor-pointer group flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-xl bg-amber-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i data-lucide="heart" class="w-7 h-7 text-amber-500"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-semibold group-hover:text-amber-400 transition-colors">Benefits Guide</h3>
+                                <p class="text-sm text-gray-500">PDF • 3.1 MB • Updated Jan 2026</p>
+                            </div>
+                            <i data-lucide="download" class="w-5 h-5 text-gray-500 group-hover:text-amber-400 transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANNOUNCEMENTS VIEW -->
+            <div id="view-announcements" class="view-section flex-1 overflow-y-auto p-8 scroll-smooth">
+                <div class="max-w-4xl mx-auto">
+                    <button onclick="navigateTo('dashboard')" class="back-button flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Back to Dashboard
+                    </button>
+                    
+                    <h1 class="text-3xl font-bold mb-2">Announcements</h1>
+                    <p class="text-gray-500 mb-8">Company news and updates</p>
+
+                    <div class="space-y-4">
+                        <div class="glass rounded-2xl p-6 border border-gray-800 hover:border-blue-500/30 transition-all cursor-pointer">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="party-popper" class="w-6 h-6 text-blue-500"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="text-xl font-semibold">Quarterly Team Building Event</h3>
+                                        <span class="text-xs text-gray-500">2 hours ago</span>
+                                    </div>
+                                    <p class="text-gray-400 mb-4">Join us for our Q2 team building event at Golden Gate Park this Friday. We'll have activities, food trucks, and team games. Don't forget to RSVP!</p>
+                                    <div class="flex gap-2">
+                                        <span class="text-xs bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full">Event</span>
+                                        <span class="text-xs bg-gray-700 text-gray-400 px-3 py-1 rounded-full">All Hands</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass rounded-2xl p-6 border border-gray-800 hover:border-green-500/30 transition-all cursor-pointer">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="leaf" class="w-6 h-6 text-green-500"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="text-xl font-semibold">New Remote Work Policy</h3>
+                                        <span class="text-xs text-gray-500">1 day ago</span>
+                                    </div>
+                                    <p class="text-gray-400 mb-4">Updated guidelines for hybrid work arrangements effective May 1st. The new policy includes flexible hours and updated home office stipends.</p>
+                                    <div class="flex gap-2">
+                                        <span class="text-xs bg-green-500/10 text-green-400 px-3 py-1 rounded-full">Policy</span>
+                                        <span class="text-xs bg-gray-700 text-gray-400 px-3 py-1 rounded-full">HR</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass rounded-2xl p-6 border border-gray-800 hover:border-purple-500/30 transition-all cursor-pointer">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="trophy" class="w-6 h-6 text-purple-500"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="text-xl font-semibold">Q1 Performance Bonuses</h3>
+                                        <span class="text-xs text-gray-500">3 days ago</span>
+                                    </div>
+                                    <p class="text-gray-400 mb-4">Congratulations to all team members who exceeded their Q1 goals! Bonuses will be processed with your next paycheck.</p>
+                                    <div class="flex gap-2">
+                                        <span class="text-xs bg-purple-500/10 text-purple-400 px-3 py-1 rounded-full">Finance</span>
+                                        <span class="text-xs bg-gray-700 text-gray-400 px-3 py-1 rounded-full">All Hands</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POLICIES VIEW -->
+            <div id="view-policies" class="view-section flex-1 overflow-y-auto p-8 scroll-smooth">
+                <div class="max-w-4xl mx-auto">
+                    <button onclick="navigateTo('dashboard')" class="back-button flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Back to Dashboard
+                    </button>
+                    
+                    <h1 class="text-3xl font-bold mb-2">Company Policies</h1>
+                    <p class="text-gray-500 mb-8">Important guidelines and procedures</p>
+
+                    <div class="grid gap-4">
+                        <div onclick="viewPolicy('remote')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-blue-500/50 transition-all cursor-pointer group">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="home" class="w-6 h-6 text-blue-500"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-lg group-hover:text-blue-400 transition-colors">Remote Work Policy</h3>
+                                        <p class="text-sm text-gray-500">Guidelines for hybrid and remote work arrangements</p>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 group-hover:text-blue-400 transition-colors"></i>
+                            </div>
+                        </div>
+
+                        <div onclick="viewPolicy('leave')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-green-500/50 transition-all cursor-pointer group">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="calendar" class="w-6 h-6 text-green-500"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-lg group-hover:text-green-400 transition-colors">Leave Policy</h3>
+                                        <p class="text-sm text-gray-500">Vacation, sick leave, and time off procedures</p>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 group-hover:text-green-400 transition-colors"></i>
+                            </div>
+                        </div>
+
+                        <div onclick="viewPolicy('code')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-purple-500/50 transition-all cursor-pointer group">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="shield" class="w-6 h-6 text-purple-500"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-lg group-hover:text-purple-400 transition-colors">Code of Conduct</h3>
+                                        <p class="text-sm text-gray-500">Professional behavior and ethics guidelines</p>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 group-hover:text-purple-400 transition-colors"></i>
+                            </div>
+                        </div>
+
+                        <div onclick="viewPolicy('security')" class="glass rounded-2xl p-6 border border-gray-800 hover:border-amber-500/50 transition-all cursor-pointer group">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i data-lucide="lock" class="w-6 h-6 text-amber-500"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-lg group-hover:text-amber-400 transition-colors">IT Security Policy</h3>
+                                        <p class="text-sm text-gray-500">Data protection and security protocols</p>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 group-hover:text-amber-400 transition-colors"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUPPORT VIEW -->
+            <div id="view-support" class="view-section flex-1 overflow-y-auto p-8 scroll-smooth">
+                <div class="max-w-4xl mx-auto">
+                    <button onclick="navigateTo('dashboard')" class="back-button flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Back to Dashboard
+                    </button>
+                    
+                    <h1 class="text-3xl font-bold mb-2">Support Center</h1>
+                    <p class="text-gray-500 mb-8">Get help and contact IT support</p>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div onclick="openSupportTicket()" class="glass rounded-2xl p-6 border border-gray-800 hover:border-blue-500/50 transition-all cursor-pointer text-center group">
+                            <div class="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                                <i data-lucide="ticket" class="w-8 h-8 text-blue-500"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2">Submit a Ticket</h3>
+                            <p class="text-sm text-gray-500">Create a new support request for IT or HR</p>
+                        </div>
+
+                        <div onclick="viewFaq()" class="glass rounded-2xl p-6 border border-gray-800 hover:border-green-500/50 transition-all cursor-pointer text-center group">
+                            <div class="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                                <i data-lucide="help-circle" class="w-8 h-8 text-green-500"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2">FAQ</h3>
+                            <p class="text-sm text-gray-500">Find answers to common questions</p>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-2xl p-6 border border-gray-800">
+                        <h3 class="text-lg font-semibold mb-4">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                                    <i data-lucide="mail" class="w-5 h-5 text-blue-500"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">IT Support</p>
+                                    <p class="text-sm text-gray-500">it-support@tecko.co</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                                    <i data-lucide="mail" class="w-5 h-5 text-purple-500"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">HR Department</p>
+                                    <p class="text-sm text-gray-500">hr@tecko.co</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center">
+                                    <i data-lucide="phone" class="w-5 h-5 text-green-500"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Emergency Hotline</p>
+                                    <p class="text-sm text-gray-500">+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROFILE VIEW -->
+            <div id="view-profile" class="view-section flex-1 overflow-y-auto p-8 scroll-smooth">
+                <div class="max-w-4xl mx-auto">
+                    <button onclick="navigateTo('dashboard')" class="back-button flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Back to Dashboard
+                    </button>
+                    
+                    <div class="glass rounded-2xl p-8 border border-gray-800 mb-6">
+                        <div class="flex items-start gap-6">
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" class="w-24 h-24 rounded-full ring-4 ring-blue-500/30" alt="Profile">
+                                <button class="absolute bottom-0 right-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
+                                    <i data-lucide="camera" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            <div class="flex-1">
+                                <h1 class="text-3xl font-bold mb-1">Alex Morgan</h1>
+                                <p class="text-gray-400 mb-4">Senior Developer • Engineering</p>
+                                <div class="flex gap-3">
+                                    <button onclick="editProfile()" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition-colors text-sm font-medium">Edit Profile</button>
+                                    <button onclick="changePassword()" class="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-sm font-medium">Change Password</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="glass rounded-2xl p-6 border border-gray-800">
+                            <h3 class="text-lg font-semibold mb-4">Personal Information</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-sm text-gray-500 block mb-1">Full Name</label>
+                                    <p class="font-medium">Alex Morgan</p>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-500 block mb-1">Email</label>
+                                    <p class="font-medium">alex.morgan@tecko.co</p>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-500 block mb-1">Phone</label>
+                                    <p class="font-medium">+1 (555) 987-6543</p>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-500 block mb-1">Location</label>
+                                    <p class="font-medium">San Francisco, CA</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass rounded-2xl p-6 border border-gray-800">
+                            <h3 class="text-lg font-semibold mb-4">Work Information</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-sm text-gray-500 block mb-1">Employee ID</label>
+                                    <p class="font-medium">EMP-2024-001</p>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-500 block mb-1">Department</label>
+                                    <p class="font-medium">Engineering</p>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-500 block mb-1">Manager</label>
+                                    <p class="font-medium">Sarah Chen</p>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-500 block mb-1">Start Date</label>
+                                    <p class="font-medium">January 15, 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SETTINGS VIEW -->
+            <div id="view-settings" class="view-section flex-1 overflow-y-auto p-8 scroll-smooth">
+                <div class="max-w-4xl mx-auto">
+                    <button onclick="navigateTo('dashboard')" class="back-button flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Back to Dashboard
+                    </button>
+                    
+                    <h1 class="text-3xl font-bold mb-2">Settings</h1>
+                    <p class="text-gray-500 mb-8">Manage your preferences and account</p>
+
+                    <div class="glass rounded-2xl p-6 border border-gray-800 mb-6">
+                        <h3 class="text-lg font-semibold mb-4">Notifications</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium">Email Notifications</p>
+                                    <p class="text-sm text-gray-500">Receive updates via email</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium">Push Notifications</p>
+                                    <p class="text-sm text-gray-500">Browser push notifications</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium">Weekly Summary</p>
+                                    <p class="text-sm text-gray-500">Get weekly activity reports</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-2xl p-6 border border-gray-800">
+                        <h3 class="text-lg font-semibold mb-4">Appearance</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium">Dark Mode</p>
+                                    <p class="text-sm text-gray-500">Use dark theme</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navigation State
+        let currentView = 'dashboard';
+
+        // Navigation Function
+        function navigateTo(view) {
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show target view
+            const targetView = document.getElementById(`view-${view}`);
+            if (targetView) {
+                targetView.classList.add('active');
+                currentView = view;
+            }
+            
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+                link.classList.remove('text-white');
+                link.classList.add('text-gray-400');
+            });
+            
+            const activeLink = document.querySelector(`[data-view="${view}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+                activeLink.classList.remove('text-gray-400');
+                activeLink.classList.add('text-white');
+            }
+            
+            // Update header content based on view
+            updateHeader(view);
+            
+            // Close sidebar on mobile
+            if (window.innerWidth < 1024) {
+                document.getElementById('sidebar').classList.add('-translate-x-full');
+            }
+            
+            // Re-initialize icons for new content
+            setTimeout(() => lucide.createIcons(), 100);
+        }
+
+        // Update Header Content
+        function updateHeader(view) {
+            const headerContent = document.getElementById('header-content');
+            const titles = {
+                'dashboard': { title: 'Welcome back, Alex! 👋', subtitle: 'Here\'s what\'s happening today' },
+                'timeoff': { title: 'Time Off', subtitle: 'Manage your leave requests' },
+                'payslips': { title: 'Payslips', subtitle: 'View your payment history' },
+                'performance': { title: 'Performance', subtitle: 'Track your goals and reviews' },
+                'directory': { title: 'Team Directory', subtitle: 'Find and connect with colleagues' },
+                'messages': { title: 'Messages', subtitle: 'Your conversations' },
+                'documents': { title: 'Documents', subtitle: 'Your important files' },
+                'announcements': { title: 'Announcements', subtitle: 'Company news and updates' },
+                'policies': { title: 'Company Policies', subtitle: 'Important guidelines' },
+                'support': { title: 'Support Center', subtitle: 'Get help when you need it' },
+                'profile': { title: 'My Profile', subtitle: 'Manage your information' },
+                'settings': { title: 'Settings', subtitle: 'Customize your experience' }
+            };
+            
+            const content = titles[view] || titles['dashboard'];
+            headerContent.innerHTML = `
+                <h1 class="text-2xl font-bold">${content.title}</h1>
+                <p class="text-sm text-gray-500">${content.subtitle}</p>
+            `;
+        }
+
+        // Modal Functions
+        function openModal(content) {
+            const modal = document.getElementById('modal-overlay');
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = content;
+            modal.classList.add('active');
+            lucide.createIcons();
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').classList.remove('active');
+        }
+
+        // Time Off Modal
+        function openTimeOffModal() {
+            const content = `
+                <h2 class="text-2xl font-bold mb-4">Request Time Off</h2>
+                <form onsubmit="submitTimeOff(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Leave Type</label>
+                        <select class="w-full bg-[#111] border border-gray-800 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500">
+                            <option>Vacation</option>
+                            <option>Sick Leave</option>
+                            <option>Personal</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Start Date</label>
+                            <input type="date" class="w-full bg-[#111] border border-gray-800 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">End Date</label>
+                            <input type="date" class="w-full bg-[#111] border border-gray-800 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Reason</label>
+                        <textarea rows="3" placeholder="Optional note..." class="w-full bg-[#111] border border-gray-800 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 resize-none"></textarea>
+                    </div>
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" onclick="closeModal()" class="flex-1 py-3 rounded-xl border border-gray-700 hover:border-gray-600 transition-colors">Cancel</button>
+                        <button type="submit" class="flex-1 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 transition-colors font-medium">Submit Request</button>
+                    </div>
+                </form>
+            `;
+            openModal(content);
+        }
+
+        function submitTimeOff(e) {
+            e.preventDefault();
+            closeModal();
+            showToast('Time off request submitted successfully!');
+        }
+
+        // Clock In Modal
+        function openClockInModal() {
+            const content = `
+                <div class="text-center">
+                    <div class="w-20 h-20 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="clock" class="w-10 h-10 text-blue-500"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold mb-2">Clock In</h2>
+                    <p class="text-gray-400 mb-6">Ready to start your shift?</p>
+                    <div class="text-4xl font-bold text-blue-400 mb-6" id="clock-time">09:00 AM</div>
+                    <div class="flex gap-3">
+                        <button onclick="closeModal()" class="flex-1 py-3 rounded-xl border border-gray-700 hover:border-gray-600 transition-colors">Cancel</button>
+                        <button onclick="confirmClockIn()" class="flex-1 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 transition-colors font-medium">Clock In Now</button>
+                    </div>
+                </div>
+            `;
+            openModal(content);
+            updateClock();
+        }
+
+        function updateClock() {
+            const timeEl = document.getElementById('clock-time');
+            if (timeEl) {
+                const now = new Date();
+                timeEl.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            }
+        }
+
+        function confirmClockIn() {
+            closeModal();
+            showToast('Clocked in successfully! Have a great day!');
+        }
+
+        // Support Ticket Modal
+        function openSupportTicket() {
+            const content = `
+                <h2 class="text-2xl font-bold mb-4">Submit Support Ticket</h2>
+                <form onsubmit="submitTicket(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Category</label>
+                        <select class="w-full bg-[#111] border border-gray-800 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500">
+                            <option>IT Support</option>
+                            <option>HR Inquiry</option>
+                            <option>Facilities</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Subject</label>
+                        <input type="text" placeholder="Brief description..." class="w-full bg-[#111] border border-gray-800 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Description</label>
+                        <textarea rows="4" placeholder="Detailed description of your issue..." class="w-full bg-[#111] border border-gray-800 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 resize-none"></textarea>
+                    </div>
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" onclick="closeModal()" class="flex-1 py-3 rounded-xl border border-gray-700 hover:border-gray-600 transition-colors">Cancel</button>
+                        <button type="submit" class="flex-1 py-3 rounded-xl bg-amber-600 hover:bg-amber-700 transition-colors font-medium">Submit Ticket</button>
+                    </div>
+                </form>
+            `;
+            openModal(content);
+        }
+
+        function submitTicket(e) {
+            e.preventDefault();
+            closeModal();
+            showToast('Support ticket submitted! We\'ll respond within 24 hours.');
+        }
+
+        // Action Functions
+        function downloadPayslip() {
+            showToast('Downloading payslip...');
+        }
+
+        function viewPayslip(id) {
+            showToast(`Opening payslip: ${id}`);
+        }
+
+        function viewTeamMember(id) {
+            navigateTo('directory');
+            setTimeout(() => viewEmployee(id), 300);
+        }
+
+        function viewEmployee(id) {
+            showToast(`Viewing profile: ${id}`);
+        }
+
+        function sendMessage(id) {
+            navigateTo('messages');
+            showToast(`Starting conversation with ${id}...`);
+        }
+
+        function viewProfile(id) {
+            if (id === 'self') {
+                navigateTo('profile');
+            } else {
+                showToast(`Viewing profile: ${id}`);
+            }
+        }
+
+        function viewRequest(id) {
+            showToast(`Viewing request: ${id}`);
+        }
+
+        function cancelRequest(id) {
+            if (confirm('Are you sure you want to cancel this request?')) {
+                showToast('Request cancelled successfully');
+            }
+        }
+
+        function viewAnnouncement(id) {
+            navigateTo('announcements');
+        }
+
+        function viewEvent(id) {
+            showToast(`Viewing event: ${id}`);
+        }
+
+        function viewDocument(id) {
+            showToast(`Opening document: ${id}`);
+        }
+
+        function viewPolicy(id) {
+            showToast(`Opening policy: ${id}`);
+        }
+
+        function viewFaq() {
+            showToast('Opening FAQ...');
+        }
+
+        function openChat(id) {
+            showToast(`Opening chat with ${id}...`);
+        }
+
+        function editProfile() {
+            showToast('Edit profile mode activated');
+        }
+
+        function changePassword() {
+            showToast('Password change form opened');
+        }
+
+        function showNotificationDetail(id) {
+            showToast(`Viewing notification: ${id}`);
+        }
+
+        // Toast Notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-8 right-8 bg-gray-900 text-white px-6 py-4 rounded-2xl shadow-2xl border border-gray-700 flex items-center gap-3 z-50 animate-slide-up';
+            toast.innerHTML = `
+                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+            lucide.createIcons();
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Sidebar Toggle
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+            sidebar.classList.toggle('absolute');
+            sidebar.classList.toggle('h-full');
+        });
+
+        // Notification Dropdown
+        const notifBtn = document.getElementById('notif-btn');
+        const notifDropdown = document.getElementById('notif-dropdown');
+        
+        notifBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notifDropdown.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!notifDropdown.contains(e.target) && e.target !== notifBtn) {
+                notifDropdown.classList.add('hidden');
+            }
+        });
+
+        // Close modal on overlay click
+        document.getElementById('modal-overlay').addEventListener('click', (e) => {
+            if (e.target.id === 'modal-overlay') {
+                closeModal();
+            }
+        });
+
+        // Chart.js Configuration
+        Chart.defaults.color = '#9CA3AF';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        
+        // Attendance Chart
+        const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+        const attendanceChart = new Chart(attendanceCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Hours Worked',
+                    data: [40, 42, 38, 40],
+                    backgroundColor: 'rgba(0, 102, 255, 0.6)',
+                    borderColor: '#0066FF',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    borderSkipped: false,
+                }, {
+                    label: 'Target',
+                    data: [40, 40, 40, 40],
+                    backgroundColor: 'rgba(124, 58, 237, 0.3)',
+                    borderColor: '#7C3AED',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        align: 'end',
+                        labels: {
+                            usePointStyle: true,
+                            pointStyle: 'circle',
+                            padding: 20,
+                            font: { size: 12 }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 50,
+                        ticks: {
+                            callback: function(value) {
+                                return value + 'h';
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Animate progress bars on load
+        window.addEventListener('load', () => {
+            const progressBars = document.querySelectorAll('.h-2 > div');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                notifDropdown.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
