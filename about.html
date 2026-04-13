@@ -414,6 +414,274 @@
         .magnetic {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        /* ==================== MOBILE RESPONSIVE FIXES ==================== */
+        
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .mobile-menu-open {
+                overflow: hidden;
+            }
+            
+            #mobile-menu {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+            }
+            
+            #mobile-menu:not(.hidden) {
+                max-height: 400px;
+            }
+        }
+
+        /* Hero Section Mobile */
+        @media (max-width: 640px) {
+            .hero-section {
+                min-height: auto;
+                padding-top: 6rem;
+                padding-bottom: 3rem;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.25rem;
+                line-height: 1.2;
+            }
+            
+            .hero-section p {
+                font-size: 1rem;
+            }
+            
+            .animate-float, .animate-float-slow {
+                animation-duration: 4s;
+            }
+        }
+
+        /* Stats Section Mobile */
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* Services Grid Mobile */
+        @media (max-width: 768px) {
+            .service-card {
+                transform: none !important;
+                padding: 1.5rem;
+            }
+            
+            .service-card:hover {
+                transform: translateY(-5px) !important;
+            }
+            
+            .card-icon {
+                width: 3rem;
+                height: 3rem;
+            }
+            
+            .card-icon svg {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+
+        /* Process Section Mobile */
+        @media (max-width: 768px) {
+            .process-card {
+                text-align: center;
+            }
+            
+            .process-number {
+                width: 4rem;
+                height: 4rem;
+                font-size: 1.5rem;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .process-card h3 {
+                font-size: 1.125rem;
+            }
+        }
+
+        /* Tech Stack Mobile */
+        @media (max-width: 640px) {
+            .tab-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .tech-card {
+                padding: 1rem;
+            }
+            
+            .tech-card svg {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+
+        /* Pricing Cards Mobile */
+        @media (max-width: 768px) {
+            .pricing-card {
+                padding: 1.5rem;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+            
+            .pricing-card h3 {
+                font-size: 1.125rem;
+            }
+            
+            .pricing-card .text-5xl {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Case Studies Mobile */
+        @media (max-width: 768px) {
+            .case-study-card h3 {
+                font-size: 1.25rem;
+            }
+            
+            .case-study-card p {
+                font-size: 0.875rem;
+            }
+        }
+
+        /* FAQ Mobile */
+        @media (max-width: 640px) {
+            .faq-item button {
+                padding: 1rem;
+            }
+            
+            .faq-item button span {
+                font-size: 0.875rem;
+                padding-right: 1rem;
+            }
+            
+            .faq-content p {
+                font-size: 0.875rem;
+                padding: 0 1rem 1rem;
+            }
+            
+            .faq-icon-container {
+                width: 2rem;
+                height: 2rem;
+                flex-shrink: 0;
+            }
+        }
+
+        /* CTA Section Mobile */
+        @media (max-width: 640px) {
+            .cta-section h2 {
+                font-size: 1.875rem;
+            }
+            
+            .cta-section button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Footer Mobile */
+        @media (max-width: 768px) {
+            footer .grid {
+                gap: 2rem;
+            }
+            
+            footer h4 {
+                font-size: 1rem;
+            }
+            
+            footer ul {
+                font-size: 0.875rem;
+            }
+        }
+
+        /* General Mobile Improvements */
+        @media (max-width: 640px) {
+            .section-padding {
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+            
+            h2 {
+                font-size: 1.875rem !important;
+            }
+            
+            .gradient-border {
+                margin: 0;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) {
+            .service-card:hover {
+                transform: none;
+            }
+            
+            .process-card:hover {
+                transform: none;
+            }
+            
+            .pricing-card:hover {
+                transform: none;
+            }
+            
+            .tech-card:hover {
+                transform: none;
+            }
+            
+            .magnetic {
+                transform: none !important;
+            }
+            
+            .img-zoom:hover img {
+                transform: none;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Fix for horizontal scroll */
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
+        /* Ensure images don't overflow */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Section padding utility */
+        .section-padding {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+        }
+
+        @media (max-width: 640px) {
+            .section-padding {
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-[#050505] text-white overflow-x-hidden">
@@ -423,7 +691,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <a href="index.html" class="flex items-center gap-3 group magnetic">
-                    <div class="logo-container">
+                    <div class="logo-container hidden sm:block">
                         <svg class="logo-hex" viewBox="0 0 100 100" fill="none">
                             <defs>
                                 <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -439,14 +707,14 @@
                                     <stop offset="100%" style="stop-color:#0066FF;stop-opacity:1" />
                                 </linearGradient>
                             </defs>
-                            <!-- <path d="M50 5 L93.3 30 V80 L50 105 L6.7 80 V30 Z" stroke="url(#grad1)" stroke-width="3" fill="none"/>
+                            <path d="M50 5 L93.3 30 V80 L50 105 L6.7 80 V30 Z" stroke="url(#grad1)" stroke-width="3" fill="none"/>
                             <circle cx="50" cy="55" r="10" fill="url(#grad1)"/>
                             <circle cx="25" cy="35" r="6" fill="url(#grad2)"/>
                             <circle cx="75" cy="35" r="6" fill="url(#grad2)"/>
                             <circle cx="50" cy="15" r="6" fill="url(#grad3)"/>
                             <circle cx="25" cy="75" r="6" fill="url(#grad3)"/>
                             <circle cx="75" cy="75" r="6" fill="url(#grad3)"/>
-                        </svg> -->
+                        </svg>
                         <svg class="logo-hex" viewBox="0 0 100 100" fill="none">
                             <path d="M50 5 L93.3 30 V80 L50 105 L6.7 80 V30 Z" stroke="url(#grad2)" stroke-width="2" fill="none"/>
                         </svg>
@@ -454,10 +722,17 @@
                             <path d="M50 5 L93.3 30 V80 L50 105 L6.7 80 V30 Z" stroke="url(#grad3)" stroke-width="2" fill="none"/>
                         </svg>
                     </div>
-               <div class="flex items-center gap-2 mb-6">
-    <img src="logo.webp" class="w-12 h-13 rounded-lg">
-    <span class="font-bold text-xl">Stackly</span>
-</div>                </a>
+                    <!-- Mobile Logo -->
+                    <div class="flex items-center gap-2 sm:hidden">
+                        <img src="logo.webp" class="w-10 h-10 rounded-lg" alt="Stackly">
+                        <span class="font-bold text-lg">Stackly</span>
+                    </div>
+                    <!-- Desktop Logo Text -->
+                    <div class="hidden sm:flex items-center gap-2">
+                        <img src="logo.webp" class="w-12 h-12 rounded-lg" alt="Stackly">
+                        <span class="font-bold text-xl">Stackly</span>
+                    </div>
+                </a>
 
                 <div class="hidden md:flex items-center gap-1">
                     <a href="index.html" class="px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 rounded-full transition-all magnetic">Home</a>
@@ -467,61 +742,63 @@
                 </div>
 
                 <div class="hidden md:block">
-                  <a href="404.html"> <button class="btn-primary bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-blue-500/25">
-                        Login
-                    </button></a> 
+                    <a href="404.html">
+                        <button class="btn-primary bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-blue-500/25">
+                            Login
+                        </button>
+                    </a>
                 </div>
 
-                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors">
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors touch-manipulation">
                     <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
             </div>
         </div>
 
         <div id="mobile-menu" class="hidden md:hidden glass-strong border-t border-gray-800">
-            <div class="px-4 py-6 space-y-2">
+            <div class="px-4 py-6 space-y-2 max-h-[80vh] overflow-y-auto">
                 <a href="index.html" class="block text-gray-300 hover:text-white py-3 px-4 rounded-xl hover:bg-white/5 transition-all">Home</a>
                 <a href="about.html" class="block text-white py-3 px-4 rounded-xl bg-white/10 transition-all">About Us</a>
                 <a href="blog.html" class="block text-gray-300 hover:text-white py-3 px-4 rounded-xl hover:bg-white/5 transition-all">Blog</a>
                 <a href="contact.html" class="block text-gray-300 hover:text-white py-3 px-4 rounded-xl hover:bg-white/5 transition-all">Contact</a>
-           <a href="login.html">    <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full font-semibold mt-4 shadow-lg shadow-blue-500/25">
+                <a href="login.html" class="block w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full font-semibold mt-4 text-center shadow-lg shadow-blue-500/25">
                     Login
-                </button></a> 
+                </a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative min-h-[70vh] flex items-center pt-20 overflow-hidden">
-        <div class="absolute inset-0 overflow-hidden">
+    <section class="hero-section relative min-h-[70vh] flex items-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-purple-900/10 to-transparent"></div>
-            <div class="absolute top-20 left-[10%] w-64 h-64 bg-blue-500/20 rounded-full blur-3xl animate-float"></div>
-            <div class="absolute top-40 right-[15%] w-80 h-80 bg-purple-500/20 rounded-full blur-3xl animate-float-slow"></div>
-            <div class="absolute bottom-20 left-[20%] w-72 h-72 bg-amber-500/10 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+            <div class="absolute top-20 left-[10%] w-32 h-32 sm:w-64 sm:h-64 bg-blue-500/20 rounded-full blur-3xl animate-float hidden sm:block"></div>
+            <div class="absolute top-40 right-[15%] w-40 h-40 sm:w-80 sm:h-80 bg-purple-500/20 rounded-full blur-3xl animate-float-slow hidden sm:block"></div>
+            <div class="absolute bottom-20 left-[20%] w-36 h-36 sm:w-72 sm:h-72 bg-amber-500/10 rounded-full blur-3xl animate-float hidden sm:block" style="animation-delay: 2s;"></div>
             <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
         </div>
 
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
             <div class="text-center max-w-4xl mx-auto">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6 animate-slide-up">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-4 sm:mb-6 animate-slide-up">
                     <i data-lucide="sparkles" class="w-4 h-4 text-blue-500"></i>
-                    <span class="text-blue-500 text-sm font-medium">Our Services</span>
+                    <span class="text-blue-500 text-xs sm:text-sm font-medium">Our Services</span>
                 </div>
                 
-                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight mb-6 animate-slide-up stagger-1">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4 sm:mb-6 animate-slide-up stagger-1 px-4 sm:px-0">
                     Comprehensive <span class="gradient-text">Digital Solutions</span> for Modern Businesses
                 </h1>
                 
-                <p class="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-8 animate-slide-up stagger-2">
+                <p class="text-gray-400 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-6 sm:mb-8 px-4 sm:px-0 animate-slide-up stagger-2">
                     From strategy to execution, we deliver cutting-edge technology services that transform your ideas into powerful digital realities.
                 </p>
                 
-                <div class="flex flex-wrap justify-center gap-4 animate-slide-up stagger-3">
-                    <button class="btn-primary bg-white text-black px-8 py-4 rounded-full font-semibold flex items-center gap-2">
+                <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 animate-slide-up stagger-3 px-4 sm:px-0">
+                    <button class="btn-primary bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold flex items-center justify-center gap-2 w-full sm:w-auto">
                         Explore Services
                         <i data-lucide="arrow-down" class="w-4 h-4"></i>
                     </button>
-                    <button class="px-8 py-4 rounded-full font-semibold border border-gray-700 hover:border-blue-500 hover:text-blue-500 transition-all flex items-center gap-2">
+                    <button class="px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold border border-gray-700 hover:border-blue-500 hover:text-blue-500 transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
                         <i data-lucide="play-circle" class="w-5 h-5"></i>
                         Watch Demo
                     </button>
@@ -531,174 +808,174 @@
     </section>
 
     <!-- Services Stats -->
-    <section class="py-16 bg-[#0a0a0a] border-y border-gray-800">
+    <section class="py-12 sm:py-16 bg-[#0a0a0a] border-y border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 stats-grid">
                 <div class="text-center reveal-scale stagger-1">
-                    <div class="text-4xl sm:text-5xl font-bold gradient-text mb-2 stat-number" data-target="50">0</div>
-                    <p class="text-gray-500 text-sm">Services Offered</p>
+                    <div class="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text mb-2 stat-number" data-target="50">0</div>
+                    <p class="text-gray-500 text-xs sm:text-sm">Services Offered</p>
                 </div>
                 <div class="text-center reveal-scale stagger-2">
-                    <div class="text-4xl sm:text-5xl font-bold gradient-text mb-2 stat-number" data-target="12000">0</div>
-                    <p class="text-gray-500 text-sm">Projects Completed</p>
+                    <div class="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text mb-2 stat-number" data-target="12000">0</div>
+                    <p class="text-gray-500 text-xs sm:text-sm">Projects Completed</p>
                 </div>
                 <div class="text-center reveal-scale stagger-3">
-                    <div class="text-4xl sm:text-5xl font-bold gradient-text mb-2 stat-number" data-target="98">0</div>
-                    <p class="text-gray-500 text-sm">% Satisfaction Rate</p>
+                    <div class="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text mb-2 stat-number" data-target="98">0</div>
+                    <p class="text-gray-500 text-xs sm:text-sm">% Satisfaction Rate</p>
                 </div>
                 <div class="text-center reveal-scale stagger-4">
-                    <div class="text-4xl sm:text-5xl font-bold gradient-text mb-2 stat-number" data-target="24">0</div>
-                    <p class="text-gray-500 text-sm">/7 Support</p>
+                    <div class="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text mb-2 stat-number" data-target="24">0</div>
+                    <p class="text-gray-500 text-xs sm:text-sm">/7 Support</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Main Services Grid -->
-    <section class="py-24 bg-[#050505] relative">
-        <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-blue-500/5 rounded-full blur-3xl"></div>
+    <section class="py-16 sm:py-24 bg-[#050505] relative section-padding">
+        <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6">
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal px-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-4 sm:mb-6">
                     <i data-lucide="grid" class="w-4 h-4 text-purple-500"></i>
-                    <span class="text-purple-500 text-sm font-medium">What We Offer</span>
+                    <span class="text-purple-500 text-xs sm:text-sm font-medium">What We Offer</span>
                 </div>
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
                     Solutions Tailored to Your <span class="gradient-text">Needs</span>
                 </h2>
-                <p class="text-gray-400 text-lg">Comprehensive services designed to accelerate your digital transformation journey.</p>
+                <p class="text-gray-400 text-base sm:text-lg">Comprehensive services designed to accelerate your digital transformation journey.</p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 perspective-1000">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 perspective-1000">
                 <!-- IT Consultation -->
-                <div class="service-card gradient-border p-8 cursor-pointer group reveal-scale stagger-1">
-                    <div class="card-icon w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500">
-                        <i data-lucide="brain-circuit" class="w-8 h-8 text-blue-500"></i>
+                <div class="service-card gradient-border p-6 sm:p-8 cursor-pointer group reveal-scale stagger-1">
+                    <div class="card-icon w-12 h-12 sm:w-16 sm:h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 transition-all duration-500">
+                        <i data-lucide="brain-circuit" class="w-6 h-6 sm:w-8 sm:h-8 text-blue-500"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-500 transition-colors">IT Consultation</h3>
-                    <p class="text-gray-400 leading-relaxed mb-6">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 group-hover:text-blue-500 transition-colors">IT Consultation</h3>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
                         Strategic technology consulting to optimize your infrastructure, streamline operations, and drive digital innovation.
                     </p>
-                    <ul class="space-y-2 mb-6 text-sm text-gray-500">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-500"></i> Digital Strategy</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-500"></i> Infrastructure Audit</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-500"></i> Cloud Migration</li>
+                    <ul class="space-y-2 mb-4 sm:mb-6 text-xs sm:text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-500"></i> Digital Strategy</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-500"></i> Infrastructure Audit</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-500"></i> Cloud Migration</li>
                     </ul>
                     <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500 group-hover:text-blue-500 transition-colors">Learn more</span>
-                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-blue-500 transition-all duration-300">
-                            <i data-lucide="arrow-right" class="w-5 h-5 arrow-icon transition-all duration-300"></i>
+                        <span class="text-xs sm:text-sm text-gray-500 group-hover:text-blue-500 transition-colors">Learn more</span>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-blue-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 arrow-icon transition-all duration-300"></i>
                         </div>
                     </div>
                 </div>
 
                 <!-- Blockchain -->
-                <div class="service-card gradient-border p-8 cursor-pointer group reveal-scale stagger-2">
-                    <div class="card-icon w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500">
-                        <i data-lucide="blocks" class="w-8 h-8 text-purple-500"></i>
+                <div class="service-card gradient-border p-6 sm:p-8 cursor-pointer group reveal-scale stagger-2">
+                    <div class="card-icon w-12 h-12 sm:w-16 sm:h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 transition-all duration-500">
+                        <i data-lucide="blocks" class="w-6 h-6 sm:w-8 sm:h-8 text-purple-500"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-purple-500 transition-colors">Blockchain</h3>
-                    <p class="text-gray-400 leading-relaxed mb-6">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 group-hover:text-purple-500 transition-colors">Blockchain</h3>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
                         Decentralized solutions for secure transactions, smart contracts, NFTs, and transparent supply chain management.
                     </p>
-                    <ul class="space-y-2 mb-6 text-sm text-gray-500">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-500"></i> Smart Contracts</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-500"></i> DeFi Solutions</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-500"></i> NFT Development</li>
+                    <ul class="space-y-2 mb-4 sm:mb-6 text-xs sm:text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-purple-500"></i> Smart Contracts</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-purple-500"></i> DeFi Solutions</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-purple-500"></i> NFT Development</li>
                     </ul>
                     <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500 group-hover:text-purple-500 transition-colors">Learn more</span>
-                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-purple-500 transition-all duration-300">
-                            <i data-lucide="arrow-right" class="w-5 h-5 arrow-icon transition-all duration-300"></i>
+                        <span class="text-xs sm:text-sm text-gray-500 group-hover:text-purple-500 transition-colors">Learn more</span>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-purple-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 arrow-icon transition-all duration-300"></i>
                         </div>
                     </div>
                 </div>
 
                 <!-- Cybersecurity -->
-                <div class="service-card gradient-border p-8 cursor-pointer group reveal-scale stagger-3">
-                    <div class="card-icon w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500">
-                        <i data-lucide="shield-check" class="w-8 h-8 text-green-500"></i>
+                <div class="service-card gradient-border p-6 sm:p-8 cursor-pointer group reveal-scale stagger-3">
+                    <div class="card-icon w-12 h-12 sm:w-16 sm:h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 transition-all duration-500">
+                        <i data-lucide="shield-check" class="w-6 h-6 sm:w-8 sm:h-8 text-green-500"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-green-500 transition-colors">Cybersecurity</h3>
-                    <p class="text-gray-400 leading-relaxed mb-6">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 group-hover:text-green-500 transition-colors">Cybersecurity</h3>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
                         Enterprise-grade security solutions to protect your digital assets, infrastructure, and sensitive data.
                     </p>
-                    <ul class="space-y-2 mb-6 text-sm text-gray-500">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Penetration Testing</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Security Audit</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Incident Response</li>
+                    <ul class="space-y-2 mb-4 sm:mb-6 text-xs sm:text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-green-500"></i> Penetration Testing</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-green-500"></i> Security Audit</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-green-500"></i> Incident Response</li>
                     </ul>
                     <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500 group-hover:text-green-500 transition-colors">Learn more</span>
-                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-green-500 transition-all duration-300">
-                            <i data-lucide="arrow-right" class="w-5 h-5 arrow-icon transition-all duration-300"></i>
+                        <span class="text-xs sm:text-sm text-gray-500 group-hover:text-green-500 transition-colors">Learn more</span>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-green-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 arrow-icon transition-all duration-300"></i>
                         </div>
                     </div>
                 </div>
 
                 <!-- AI & Machine Learning -->
-                <div class="service-card gradient-border p-8 cursor-pointer group reveal-scale stagger-4">
-                    <div class="card-icon w-16 h-16 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500">
-                        <i data-lucide="brain" class="w-8 h-8 text-amber-500"></i>
+                <div class="service-card gradient-border p-6 sm:p-8 cursor-pointer group reveal-scale stagger-4">
+                    <div class="card-icon w-12 h-12 sm:w-16 sm:h-16 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 transition-all duration-500">
+                        <i data-lucide="brain" class="w-6 h-6 sm:w-8 sm:h-8 text-amber-500"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-amber-500 transition-colors">AI & Machine Learning</h3>
-                    <p class="text-gray-400 leading-relaxed mb-6">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 group-hover:text-amber-500 transition-colors">AI & Machine Learning</h3>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
                         Intelligent automation, predictive analytics, and custom AI models to transform your business operations.
                     </p>
-                    <ul class="space-y-2 mb-6 text-sm text-gray-500">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-500"></i> Predictive Analytics</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-500"></i> NLP Solutions</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-500"></i> Computer Vision</li>
+                    <ul class="space-y-2 mb-4 sm:mb-6 text-xs sm:text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-amber-500"></i> Predictive Analytics</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-amber-500"></i> NLP Solutions</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-amber-500"></i> Computer Vision</li>
                     </ul>
                     <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500 group-hover:text-amber-500 transition-colors">Learn more</span>
-                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-amber-500 transition-all duration-300">
-                            <i data-lucide="arrow-right" class="w-5 h-5 arrow-icon transition-all duration-300"></i>
+                        <span class="text-xs sm:text-sm text-gray-500 group-hover:text-amber-500 transition-colors">Learn more</span>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-amber-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 arrow-icon transition-all duration-300"></i>
                         </div>
                     </div>
                 </div>
 
                 <!-- Cloud Services -->
-                <div class="service-card gradient-border p-8 cursor-pointer group reveal-scale stagger-5">
-                    <div class="card-icon w-16 h-16 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500">
-                        <i data-lucide="cloud" class="w-8 h-8 text-cyan-500"></i>
+                <div class="service-card gradient-border p-6 sm:p-8 cursor-pointer group reveal-scale stagger-5">
+                    <div class="card-icon w-12 h-12 sm:w-16 sm:h-16 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 transition-all duration-500">
+                        <i data-lucide="cloud" class="w-6 h-6 sm:w-8 sm:h-8 text-cyan-500"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-500 transition-colors">Cloud Services</h3>
-                    <p class="text-gray-400 leading-relaxed mb-6">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 group-hover:text-cyan-500 transition-colors">Cloud Services</h3>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
                         Scalable cloud infrastructure, migration services, and management across AWS, Azure, and Google Cloud.
                     </p>
-                    <ul class="space-y-2 mb-6 text-sm text-gray-500">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-500"></i> Cloud Migration</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-500"></i> DevOps</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-500"></i> Serverless</li>
+                    <ul class="space-y-2 mb-4 sm:mb-6 text-xs sm:text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-cyan-500"></i> Cloud Migration</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-cyan-500"></i> DevOps</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-cyan-500"></i> Serverless</li>
                     </ul>
                     <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500 group-hover:text-cyan-500 transition-colors">Learn more</span>
-                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-cyan-500 transition-all duration-300">
-                            <i data-lucide="arrow-right" class="w-5 h-5 arrow-icon transition-all duration-300"></i>
+                        <span class="text-xs sm:text-sm text-gray-500 group-hover:text-cyan-500 transition-colors">Learn more</span>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-cyan-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 arrow-icon transition-all duration-300"></i>
                         </div>
                     </div>
                 </div>
 
                 <!-- Web Development -->
-                <div class="service-card gradient-border p-8 cursor-pointer group reveal-scale stagger-6">
-                    <div class="card-icon w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500">
-                        <i data-lucide="globe" class="w-8 h-8 text-red-500"></i>
+                <div class="service-card gradient-border p-6 sm:p-8 cursor-pointer group reveal-scale stagger-6">
+                    <div class="card-icon w-12 h-12 sm:w-16 sm:h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 transition-all duration-500">
+                        <i data-lucide="globe" class="w-6 h-6 sm:w-8 sm:h-8 text-red-500"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-red-500 transition-colors">Web Development</h3>
-                    <p class="text-gray-400 leading-relaxed mb-6">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 group-hover:text-red-500 transition-colors">Web Development</h3>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
                         Custom web applications, e-commerce platforms, and progressive web apps built with modern technologies.
                     </p>
-                    <ul class="space-y-2 mb-6 text-sm text-gray-500">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-red-500"></i> React/Next.js</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-red-500"></i> E-commerce</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-red-500"></i> PWA</li>
+                    <ul class="space-y-2 mb-4 sm:mb-6 text-xs sm:text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-red-500"></i> React/Next.js</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-red-500"></i> E-commerce</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-red-500"></i> PWA</li>
                     </ul>
                     <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500 group-hover:text-red-500 transition-colors">Learn more</span>
-                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-red-500 transition-all duration-300">
-                            <i data-lucide="arrow-right" class="w-5 h-5 arrow-icon transition-all duration-300"></i>
+                        <span class="text-xs sm:text-sm text-gray-500 group-hover:text-red-500 transition-colors">Learn more</span>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-red-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 arrow-icon transition-all duration-300"></i>
                         </div>
                     </div>
                 </div>
@@ -707,27 +984,27 @@
     </section>
 
     <!-- Process Section -->
-    <section class="py-24 bg-[#0a0a0a] relative overflow-hidden">
-        <div class="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
+    <section class="py-16 sm:py-24 bg-[#0a0a0a] relative overflow-hidden section-padding">
+        <div class="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent hidden lg:block"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-6">
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal px-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-4 sm:mb-6">
                     <i data-lucide="workflow" class="w-4 h-4 text-green-500"></i>
-                    <span class="text-green-500 text-sm font-medium">Our Process</span>
+                    <span class="text-green-500 text-xs sm:text-sm font-medium">Our Process</span>
                 </div>
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
                     How We <span class="gradient-text">Work</span>
                 </h2>
-                <p class="text-gray-400 text-lg">A proven methodology that ensures project success from start to finish.</p>
+                <p class="text-gray-400 text-base sm:text-lg">A proven methodology that ensures project success from start to finish.</p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                 <!-- Step 1 -->
                 <div class="process-card relative reveal-scale stagger-1">
-                    <div class="process-number w-20 h-20 bg-blue-500 rounded-2xl flex items-center justify-center text-3xl font-bold mb-6 transition-all duration-500 shadow-lg shadow-blue-500/30">01</div>
-                    <h3 class="text-xl font-bold mb-3">Discovery</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <div class="process-number w-16 h-16 sm:w-20 sm:h-20 bg-blue-500 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 transition-all duration-500 shadow-lg shadow-blue-500/30 mx-auto sm:mx-0">01</div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-center sm:text-left">Discovery</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed text-center sm:text-left">
                         Deep dive into your business needs, goals, and challenges to understand the full scope.
                     </p>
                     <div class="hidden lg:block absolute top-10 right-0 w-full h-0.5 bg-gradient-to-r from-blue-500 to-transparent transform translate-x-1/2"></div>
@@ -735,9 +1012,9 @@
 
                 <!-- Step 2 -->
                 <div class="process-card relative reveal-scale stagger-2">
-                    <div class="process-number w-20 h-20 bg-purple-500 rounded-2xl flex items-center justify-center text-3xl font-bold mb-6 transition-all duration-500 shadow-lg shadow-purple-500/30">02</div>
-                    <h3 class="text-xl font-bold mb-3">Strategy</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <div class="process-number w-16 h-16 sm:w-20 sm:h-20 bg-purple-500 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 transition-all duration-500 shadow-lg shadow-purple-500/30 mx-auto sm:mx-0">02</div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-center sm:text-left">Strategy</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed text-center sm:text-left">
                         Crafting a comprehensive roadmap with clear milestones, deliverables, and timelines.
                     </p>
                     <div class="hidden lg:block absolute top-10 right-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-transparent transform translate-x-1/2"></div>
@@ -745,9 +1022,9 @@
 
                 <!-- Step 3 -->
                 <div class="process-card relative reveal-scale stagger-3">
-                    <div class="process-number w-20 h-20 bg-amber-500 rounded-2xl flex items-center justify-center text-3xl font-bold mb-6 transition-all duration-500 shadow-lg shadow-amber-500/30">03</div>
-                    <h3 class="text-xl font-bold mb-3">Development</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <div class="process-number w-16 h-16 sm:w-20 sm:h-20 bg-amber-500 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 transition-all duration-500 shadow-lg shadow-amber-500/30 mx-auto sm:mx-0">03</div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-center sm:text-left">Development</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed text-center sm:text-left">
                         Agile development with regular sprints, transparent communication, and quality assurance.
                     </p>
                     <div class="hidden lg:block absolute top-10 right-0 w-full h-0.5 bg-gradient-to-r from-amber-500 to-transparent transform translate-x-1/2"></div>
@@ -755,9 +1032,9 @@
 
                 <!-- Step 4 -->
                 <div class="process-card relative reveal-scale stagger-4">
-                    <div class="process-number w-20 h-20 bg-green-500 rounded-2xl flex items-center justify-center text-3xl font-bold mb-6 transition-all duration-500 shadow-lg shadow-green-500/30">04</div>
-                    <h3 class="text-xl font-bold mb-3">Delivery</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
+                    <div class="process-number w-16 h-16 sm:w-20 sm:h-20 bg-green-500 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 transition-all duration-500 shadow-lg shadow-green-500/30 mx-auto sm:mx-0">04</div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-center sm:text-left">Delivery</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed text-center sm:text-left">
                         Launch, monitor, and optimize with ongoing support and maintenance services.
                     </p>
                 </div>
@@ -766,196 +1043,196 @@
     </section>
 
     <!-- Technology Stack -->
-    <section class="py-24 bg-[#050505] relative">
+    <section class="py-16 sm:py-24 bg-[#050505] relative section-padding">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-6">
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal px-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-4 sm:mb-6">
                     <i data-lucide="code-2" class="w-4 h-4 text-cyan-500"></i>
-                    <span class="text-cyan-500 text-sm font-medium">Tech Stack</span>
+                    <span class="text-cyan-500 text-xs sm:text-sm font-medium">Tech Stack</span>
                 </div>
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
                     Technologies We <span class="gradient-text">Master</span>
                 </h2>
-                <p class="text-gray-400 text-lg">Cutting-edge tools and frameworks we use to build exceptional solutions.</p>
+                <p class="text-gray-400 text-base sm:text-lg">Cutting-edge tools and frameworks we use to build exceptional solutions.</p>
             </div>
 
             <!-- Category Tabs -->
-            <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
-                <button class="tab-btn active px-6 py-3 rounded-full text-sm font-medium transition-all" onclick="switchTab('frontend')">Frontend</button>
-                <button class="tab-btn px-6 py-3 rounded-full text-sm font-medium bg-gray-800 text-gray-400 hover:bg-gray-700 transition-all" onclick="switchTab('backend')">Backend</button>
-                <button class="tab-btn px-6 py-3 rounded-full text-sm font-medium bg-gray-800 text-gray-400 hover:bg-gray-700 transition-all" onclick="switchTab('mobile')">Mobile</button>
-                <button class="tab-btn px-6 py-3 rounded-full text-sm font-medium bg-gray-800 text-gray-400 hover:bg-gray-700 transition-all" onclick="switchTab('cloud')">Cloud & DevOps</button>
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 reveal px-4">
+                <button class="tab-btn active px-4 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-medium transition-all" onclick="switchTab('frontend', this)">Frontend</button>
+                <button class="tab-btn px-4 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-medium bg-gray-800 text-gray-400 hover:bg-gray-700 transition-all" onclick="switchTab('backend', this)">Backend</button>
+                <button class="tab-btn px-4 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-medium bg-gray-800 text-gray-400 hover:bg-gray-700 transition-all" onclick="switchTab('mobile', this)">Mobile</button>
+                <button class="tab-btn px-4 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-medium bg-gray-800 text-gray-400 hover:bg-gray-700 transition-all" onclick="switchTab('cloud', this)">Cloud & DevOps</button>
             </div>
 
             <!-- Tech Grid -->
-            <div id="tech-content" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 reveal-scale">
+            <div id="tech-content" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 reveal-scale px-4 sm:px-0">
                 <!-- Frontend Technologies -->
-                <div class="tech-card bg-[#111] border border-gray-800 rounded-2xl p-6 flex flex-col items-center gap-3 hover:border-blue-500/50 cursor-pointer group">
-                    <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <i data-lucide="atom" class="w-6 h-6 text-blue-400"></i>
+                <div class="tech-card bg-[#111] border border-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col items-center gap-2 sm:gap-3 hover:border-blue-500/50 cursor-pointer group">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="atom" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400"></i>
                     </div>
-                    <span class="font-medium text-sm">React</span>
+                    <span class="font-medium text-xs sm:text-sm">React</span>
                 </div>
-                <div class="tech-card bg-[#111] border border-gray-800 rounded-2xl p-6 flex flex-col items-center gap-3 hover:border-purple-500/50 cursor-pointer group">
-                    <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <i data-lucide="triangle" class="w-6 h-6 text-purple-400"></i>
+                <div class="tech-card bg-[#111] border border-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col items-center gap-2 sm:gap-3 hover:border-purple-500/50 cursor-pointer group">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="triangle" class="w-5 h-5 sm:w-6 sm:h-6 text-purple-400"></i>
                     </div>
-                    <span class="font-medium text-sm">Vue.js</span>
+                    <span class="font-medium text-xs sm:text-sm">Vue.js</span>
                 </div>
-                <div class="tech-card bg-[#111] border border-gray-800 rounded-2xl p-6 flex flex-col items-center gap-3 hover:border-cyan-500/50 cursor-pointer group">
-                    <div class="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <i data-lucide="zap" class="w-6 h-6 text-cyan-400"></i>
+                <div class="tech-card bg-[#111] border border-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col items-center gap-2 sm:gap-3 hover:border-cyan-500/50 cursor-pointer group">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="zap" class="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400"></i>
                     </div>
-                    <span class="font-medium text-sm">Next.js</span>
+                    <span class="font-medium text-xs sm:text-sm">Next.js</span>
                 </div>
-                <div class="tech-card bg-[#111] border border-gray-800 rounded-2xl p-6 flex flex-col items-center gap-3 hover:border-amber-500/50 cursor-pointer group">
-                    <div class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <i data-lucide="palette" class="w-6 h-6 text-amber-400"></i>
+                <div class="tech-card bg-[#111] border border-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col items-center gap-2 sm:gap-3 hover:border-amber-500/50 cursor-pointer group">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-amber-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="palette" class="w-5 h-5 sm:w-6 sm:h-6 text-amber-400"></i>
                     </div>
-                    <span class="font-medium text-sm">Tailwind</span>
+                    <span class="font-medium text-xs sm:text-sm">Tailwind</span>
                 </div>
-                <div class="tech-card bg-[#111] border border-gray-800 rounded-2xl p-6 flex flex-col items-center gap-3 hover:border-red-500/50 cursor-pointer group">
-                    <div class="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <i data-lucide="flame" class="w-6 h-6 text-red-400"></i>
+                <div class="tech-card bg-[#111] border border-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col items-center gap-2 sm:gap-3 hover:border-red-500/50 cursor-pointer group">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-red-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="flame" class="w-5 h-5 sm:w-6 sm:h-6 text-red-400"></i>
                     </div>
-                    <span class="font-medium text-sm">Angular</span>
+                    <span class="font-medium text-xs sm:text-sm">Angular</span>
                 </div>
-                <div class="tech-card bg-[#111] border border-gray-800 rounded-2xl p-6 flex flex-col items-center gap-3 hover:border-green-500/50 cursor-pointer group">
-                    <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <i data-lucide="leaf" class="w-6 h-6 text-green-400"></i>
+                <div class="tech-card bg-[#111] border border-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col items-center gap-2 sm:gap-3 hover:border-green-500/50 cursor-pointer group">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="leaf" class="w-5 h-5 sm:w-6 sm:h-6 text-green-400"></i>
                     </div>
-                    <span class="font-medium text-sm">Svelte</span>
+                    <span class="font-medium text-xs sm:text-sm">Svelte</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Pricing Section -->
-    <section class="py-24 bg-[#0a0a0a] relative">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-3xl"></div>
+    <section class="py-16 sm:py-24 bg-[#0a0a0a] relative section-padding">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-6">
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal px-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-4 sm:mb-6">
                     <i data-lucide="credit-card" class="w-4 h-4 text-amber-500"></i>
-                    <span class="text-amber-500 text-sm font-medium">Pricing</span>
+                    <span class="text-amber-500 text-xs sm:text-sm font-medium">Pricing</span>
                 </div>
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
                     Flexible <span class="gradient-text">Pricing</span> Plans
                 </h2>
-                <p class="text-gray-400 text-lg">Choose the perfect plan for your business needs.</p>
+                <p class="text-gray-400 text-base sm:text-lg">Choose the perfect plan for your business needs.</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto px-4 sm:px-0">
                 <!-- Starter Plan -->
-                <div class="pricing-card bg-[#111] border border-gray-800 rounded-3xl p-8 reveal-scale stagger-1">
-                    <div class="mb-6">
-                        <h3 class="text-xl font-bold mb-2">Starter</h3>
-                        <p class="text-gray-500 text-sm">Perfect for small projects</p>
+                <div class="pricing-card bg-[#111] border border-gray-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8 reveal-scale stagger-1">
+                    <div class="mb-4 sm:mb-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Starter</h3>
+                        <p class="text-gray-500 text-xs sm:text-sm">Perfect for small projects</p>
                     </div>
-                    <div class="mb-6">
-                        <span class="text-5xl font-bold">$2,500</span>
-                        <span class="text-gray-500">/project</span>
+                    <div class="mb-4 sm:mb-6">
+                        <span class="text-3xl sm:text-4xl lg:text-5xl font-bold">$2,500</span>
+                        <span class="text-gray-500 text-sm">/project</span>
                     </div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                    <ul class="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
                             <span>Up to 10 pages</span>
                         </li>
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
                             <span>Responsive design</span>
                         </li>
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
                             <span>Basic SEO setup</span>
                         </li>
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
                             <span>1 month support</span>
                         </li>
-                        <li class="flex items-center gap-3 text-sm text-gray-600">
-                            <i data-lucide="x" class="w-5 h-5 text-gray-600"></i>
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-600">
+                            <i data-lucide="x" class="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 flex-shrink-0"></i>
                             <span>Custom integrations</span>
                         </li>
                     </ul>
-                    <button class="w-full py-4 rounded-full border border-gray-700 hover:border-blue-500 hover:text-blue-500 transition-all font-semibold">
+                    <button class="w-full py-3 sm:py-4 rounded-full border border-gray-700 hover:border-blue-500 hover:text-blue-500 transition-all font-semibold text-sm sm:text-base">
                         Get Started
                     </button>
                 </div>
 
                 <!-- Professional Plan (Featured) -->
-                <div class="pricing-card featured rounded-3xl p-8 relative reveal-scale stagger-2 transform md:-translate-y-4">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-sm font-semibold">
+                <div class="pricing-card featured rounded-2xl sm:rounded-3xl p-6 sm:p-8 relative reveal-scale stagger-2 transform md:-translate-y-4">
+                    <div class="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 px-3 sm:px-4 py-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap">
                         Most Popular
                     </div>
-                    <div class="mb-6">
-                        <h3 class="text-xl font-bold mb-2 text-blue-400">Professional</h3>
-                        <p class="text-gray-400 text-sm">For growing businesses</p>
+                    <div class="mb-4 sm:mb-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2 text-blue-400">Professional</h3>
+                        <p class="text-gray-400 text-xs sm:text-sm">For growing businesses</p>
                     </div>
-                    <div class="mb-6">
-                        <span class="text-5xl font-bold gradient-text">$7,500</span>
-                        <span class="text-gray-400">/project</span>
+                    <div class="mb-4 sm:mb-6">
+                        <span class="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text">$7,500</span>
+                        <span class="text-gray-400 text-sm">/project</span>
                     </div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-blue-500"></i>
+                    <ul class="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0"></i>
                             <span>Unlimited pages</span>
                         </li>
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-blue-500"></i>
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0"></i>
                             <span>Advanced animations</span>
                         </li>
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-blue-500"></i>
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0"></i>
                             <span>Full SEO optimization</span>
                         </li>
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-blue-500"></i>
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0"></i>
                             <span>3 months support</span>
                         </li>
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-blue-500"></i>
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0"></i>
                             <span>Custom integrations</span>
                         </li>
                     </ul>
-                    <button class="btn-primary w-full py-4 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg shadow-blue-500/30">
+                    <button class="btn-primary w-full py-3 sm:py-4 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg shadow-blue-500/30 text-sm sm:text-base">
                         Get Started
                     </button>
                 </div>
 
                 <!-- Enterprise Plan -->
-                <div class="pricing-card bg-[#111] border border-gray-800 rounded-3xl p-8 reveal-scale stagger-3">
-                    <div class="mb-6">
-                        <h3 class="text-xl font-bold mb-2">Enterprise</h3>
-                        <p class="text-gray-500 text-sm">Large scale solutions</p>
+                <div class="pricing-card bg-[#111] border border-gray-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8 reveal-scale stagger-3">
+                    <div class="mb-4 sm:mb-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Enterprise</h3>
+                        <p class="text-gray-500 text-xs sm:text-sm">Large scale solutions</p>
                     </div>
-                    <div class="mb-6">
-                        <span class="text-5xl font-bold">Custom</span>
+                    <div class="mb-4 sm:mb-6">
+                        <span class="text-3xl sm:text-4xl lg:text-5xl font-bold">Custom</span>
                     </div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                    <ul class="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
                             <span>Dedicated team</span>
                         </li>
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
                             <span>Priority support 24/7</span>
                         </li>
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
                             <span>Custom architecture</span>
                         </li>
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
                             <span>SLA guarantee</span>
                         </li>
-                        <li class="flex items-center gap-3 text-sm">
-                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                        <li class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
                             <span>On-premise options</span>
                         </li>
                     </ul>
-                    <button class="w-full py-4 rounded-full border border-gray-700 hover:border-green-500 hover:text-green-500 transition-all font-semibold">
+                    <button class="w-full py-3 sm:py-4 rounded-full border border-gray-700 hover:border-green-500 hover:text-green-500 transition-all font-semibold text-sm sm:text-base">
                         Contact Sales
                     </button>
                 </div>
@@ -964,39 +1241,39 @@
     </section>
 
     <!-- Case Studies -->
-    <section class="py-24 bg-[#050505] relative">
+    <section class="py-16 sm:py-24 bg-[#050505] relative section-padding">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12 reveal">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 mb-8 sm:mb-12 reveal px-4">
                 <div>
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 mb-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-red-500/10 border border-red-500/20 mb-4">
                         <i data-lucide="briefcase" class="w-4 h-4 text-red-500"></i>
-                        <span class="text-red-500 text-sm font-medium">Case Studies</span>
+                        <span class="text-red-500 text-xs sm:text-sm font-medium">Case Studies</span>
                     </div>
-                    <h2 class="text-3xl sm:text-4xl font-bold">Success <span class="gradient-text">Stories</span></h2>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold">Success <span class="gradient-text">Stories</span></h2>
                 </div>
-                <button class="group px-6 py-3 rounded-full border border-gray-700 hover:border-red-500 hover:text-red-500 transition-all flex items-center gap-2">
+                <button class="group px-4 sm:px-6 py-2.5 sm:py-3 rounded-full border border-gray-700 hover:border-red-500 hover:text-red-500 transition-all flex items-center gap-2 text-sm sm:text-base w-full sm:w-auto justify-center">
                     View All Cases
                     <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
                 </button>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-8">
+            <div class="grid md:grid-cols-2 gap-6 sm:gap-8 px-4 sm:px-0">
                 <!-- Case Study 1 -->
-                <div class="group relative rounded-3xl overflow-hidden reveal-left">
+                <div class="group relative rounded-2xl sm:rounded-3xl overflow-hidden reveal-left case-study-card">
                     <div class="aspect-[16/10] img-zoom">
                         <img src="lap.webp" 
                              alt="Fintech Platform" 
                              class="w-full h-full object-cover">
                     </div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-8">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="px-3 py-1 bg-blue-500/20 rounded-full text-xs font-medium text-blue-400">Fintech</span>
-                            <span class="px-3 py-1 bg-purple-500/20 rounded-full text-xs font-medium text-purple-400">Blockchain</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-8">
+                        <div class="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                            <span class="px-2 sm:px-3 py-1 bg-blue-500/20 rounded-full text-xs font-medium text-blue-400">Fintech</span>
+                            <span class="px-2 sm:px-3 py-1 bg-purple-500/20 rounded-full text-xs font-medium text-purple-400">Blockchain</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-2 group-hover:text-blue-400 transition-colors">Global Payment Platform</h3>
-                        <p class="text-gray-400 text-sm mb-4">Built a secure, scalable payment infrastructure processing $50M+ monthly transactions.</p>
-                        <div class="flex items-center gap-6 text-sm">
+                        <h3 class="text-lg sm:text-2xl font-bold mb-1 sm:mb-2 group-hover:text-blue-400 transition-colors">Global Payment Platform</h3>
+                        <p class="text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4">Built a secure, scalable payment infrastructure processing $50M+ monthly transactions.</p>
+                        <div class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm">
                             <div>
                                 <span class="text-gray-500 block text-xs">Result</span>
                                 <span class="text-green-400 font-semibold">+300% Efficiency</span>
@@ -1010,21 +1287,21 @@
                 </div>
 
                 <!-- Case Study 2 -->
-                <div class="group relative rounded-3xl overflow-hidden reveal-right">
+                <div class="group relative rounded-2xl sm:rounded-3xl overflow-hidden reveal-right case-study-card">
                     <div class="aspect-[16/10] img-zoom">
                         <img src="img7.webp" 
                              alt="Healthcare AI" 
                              class="w-full h-full object-cover">
                     </div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-8">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="px-3 py-1 bg-amber-500/20 rounded-full text-xs font-medium text-amber-400">Healthcare</span>
-                            <span class="px-3 py-1 bg-green-500/20 rounded-full text-xs font-medium text-green-400">AI/ML</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-8">
+                        <div class="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                            <span class="px-2 sm:px-3 py-1 bg-amber-500/20 rounded-full text-xs font-medium text-amber-400">Healthcare</span>
+                            <span class="px-2 sm:px-3 py-1 bg-green-500/20 rounded-full text-xs font-medium text-green-400">AI/ML</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-2 group-hover:text-amber-400 transition-colors">AI Diagnostic System</h3>
-                        <p class="text-gray-400 text-sm mb-4">Developed machine learning models for early disease detection with 95% accuracy.</p>
-                        <div class="flex items-center gap-6 text-sm">
+                        <h3 class="text-lg sm:text-2xl font-bold mb-1 sm:mb-2 group-hover:text-amber-400 transition-colors">AI Diagnostic System</h3>
+                        <p class="text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4">Developed machine learning models for early disease detection with 95% accuracy.</p>
+                        <div class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm">
                             <div>
                                 <span class="text-gray-500 block text-xs">Result</span>
                                 <span class="text-green-400 font-semibold">95% Accuracy</span>
@@ -1041,70 +1318,70 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="py-24 bg-[#0a0a0a] relative">
+    <section class="py-16 sm:py-24 bg-[#0a0a0a] relative section-padding">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 reveal">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
+            <div class="text-center mb-12 sm:mb-16 reveal px-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-4 sm:mb-6">
                     <i data-lucide="help-circle" class="w-4 h-4 text-blue-500"></i>
-                    <span class="text-blue-500 text-sm font-medium">FAQ</span>
+                    <span class="text-blue-500 text-xs sm:text-sm font-medium">FAQ</span>
                 </div>
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
                     Common <span class="gradient-text">Questions</span>
                 </h2>
             </div>
 
-            <div class="space-y-4">
-                <div class="faq-item active bg-[#111] border border-gray-800 rounded-2xl overflow-hidden reveal-scale stagger-1">
-                    <button class="w-full flex items-center justify-between p-6 text-left group" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg group-hover:text-blue-500 transition-colors">What is your typical project timeline?</span>
-                        <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
-                            <i data-lucide="minus" class="w-5 h-5 faq-icon transition-transform duration-300"></i>
+            <div class="space-y-3 sm:space-y-4 px-4 sm:px-0">
+                <div class="faq-item active bg-[#111] border border-gray-800 rounded-xl sm:rounded-2xl overflow-hidden reveal-scale stagger-1">
+                    <button class="w-full flex items-center justify-between p-4 sm:p-6 text-left group" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-sm sm:text-lg group-hover:text-blue-500 transition-colors pr-4">What is your typical project timeline?</span>
+                        <div class="faq-icon-container w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors flex-shrink-0">
+                            <i data-lucide="minus" class="w-4 h-4 sm:w-5 sm:h-5 faq-icon transition-transform duration-300"></i>
                         </div>
                     </button>
-                    <div class="faq-content px-6">
-                        <p class="text-gray-400 pb-6 leading-relaxed">
+                    <div class="faq-content px-4 sm:px-6">
+                        <p class="text-gray-400 pb-4 sm:pb-6 leading-relaxed text-sm sm:text-base">
                             Project timelines vary based on complexity. A typical website takes 4-8 weeks, while complex applications may take 3-6 months. We provide detailed timelines during our discovery phase.
                         </p>
                     </div>
                 </div>
 
-                <div class="faq-item bg-[#111] border border-gray-800 rounded-2xl overflow-hidden reveal-scale stagger-2">
-                    <button class="w-full flex items-center justify-between p-6 text-left group" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg group-hover:text-blue-500 transition-colors">Do you offer ongoing maintenance?</span>
-                        <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
-                            <i data-lucide="plus" class="w-5 h-5 faq-icon transition-transform duration-300"></i>
+                <div class="faq-item bg-[#111] border border-gray-800 rounded-xl sm:rounded-2xl overflow-hidden reveal-scale stagger-2">
+                    <button class="w-full flex items-center justify-between p-4 sm:p-6 text-left group" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-sm sm:text-lg group-hover:text-blue-500 transition-colors pr-4">Do you offer ongoing maintenance?</span>
+                        <div class="faq-icon-container w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors flex-shrink-0">
+                            <i data-lucide="plus" class="w-4 h-4 sm:w-5 sm:h-5 faq-icon transition-transform duration-300"></i>
                         </div>
                     </button>
-                    <div class="faq-content px-6">
-                        <p class="text-gray-400 pb-6 leading-relaxed">
+                    <div class="faq-content px-4 sm:px-6">
+                        <p class="text-gray-400 pb-4 sm:pb-6 leading-relaxed text-sm sm:text-base">
                             Yes! We offer comprehensive maintenance packages including security updates, performance optimization, content updates, and 24/7 technical support.
                         </p>
                     </div>
                 </div>
 
-                <div class="faq-item bg-[#111] border border-gray-800 rounded-2xl overflow-hidden reveal-scale stagger-3">
-                    <button class="w-full flex items-center justify-between p-6 text-left group" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg group-hover:text-blue-500 transition-colors">How do you handle project communication?</span>
-                        <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
-                            <i data-lucide="plus" class="w-5 h-5 faq-icon transition-transform duration-300"></i>
+                <div class="faq-item bg-[#111] border border-gray-800 rounded-xl sm:rounded-2xl overflow-hidden reveal-scale stagger-3">
+                    <button class="w-full flex items-center justify-between p-4 sm:p-6 text-left group" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-sm sm:text-lg group-hover:text-blue-500 transition-colors pr-4">How do you handle project communication?</span>
+                        <div class="faq-icon-container w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors flex-shrink-0">
+                            <i data-lucide="plus" class="w-4 h-4 sm:w-5 sm:h-5 faq-icon transition-transform duration-300"></i>
                         </div>
                     </button>
-                    <div class="faq-content px-6">
-                        <p class="text-gray-400 pb-6 leading-relaxed">
+                    <div class="faq-content px-4 sm:px-6">
+                        <p class="text-gray-400 pb-4 sm:pb-6 leading-relaxed text-sm sm:text-base">
                             We use agile methodologies with weekly sprint reviews, daily standups, and real-time collaboration tools. You'll have direct access to our project management platform.
                         </p>
                     </div>
                 </div>
 
-                <div class="faq-item bg-[#111] border border-gray-800 rounded-2xl overflow-hidden reveal-scale stagger-4">
-                    <button class="w-full flex items-center justify-between p-6 text-left group" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg group-hover:text-blue-500 transition-colors">What makes Tecko different from other agencies?</span>
-                        <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
-                            <i data-lucide="plus" class="w-5 h-5 faq-icon transition-transform duration-300"></i>
+                <div class="faq-item bg-[#111] border border-gray-800 rounded-xl sm:rounded-2xl overflow-hidden reveal-scale stagger-4">
+                    <button class="w-full flex items-center justify-between p-4 sm:p-6 text-left group" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-sm sm:text-lg group-hover:text-blue-500 transition-colors pr-4">What makes Tecko different from other agencies?</span>
+                        <div class="faq-icon-container w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors flex-shrink-0">
+                            <i data-lucide="plus" class="w-4 h-4 sm:w-5 sm:h-5 faq-icon transition-transform duration-300"></i>
                         </div>
                     </button>
-                    <div class="faq-content px-6">
-                        <p class="text-gray-400 pb-6 leading-relaxed">
+                    <div class="faq-content px-4 sm:px-6">
+                        <p class="text-gray-400 pb-4 sm:pb-6 leading-relaxed text-sm sm:text-base">
                             We combine technical excellence with creative innovation. Our team includes industry veterans, we use cutting-edge tech, and we prioritize long-term partnerships over one-off projects.
                         </p>
                     </div>
@@ -1114,23 +1391,23 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-24 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-blue-600/20 relative overflow-hidden">
+    <section class="cta-section py-16 sm:py-24 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-blue-600/20 relative overflow-hidden section-padding">
         <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.03%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
         
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative reveal">
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4 sm:mb-6">
                 Ready to Transform Your <span class="gradient-text">Business</span>?
             </h2>
-            <p class="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
+            <p class="text-gray-400 text-base sm:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto px-4 sm:px-0">
                 Let's discuss how our services can help you achieve your digital goals. Get a free consultation today.
             </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <button class="btn-primary bg-white text-black px-8 py-4 rounded-full font-semibold flex items-center gap-2">
+            <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 px-4 sm:px-0">
+                <button class="btn-primary bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold flex items-center justify-center gap-2 w-full sm:w-auto">
                     Start a Project
-                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                 </button>
-                <button class="px-8 py-4 rounded-full font-semibold border border-gray-700 hover:border-white hover:text-white transition-all flex items-center gap-2">
-                    <i data-lucide="calendar" class="w-5 h-5"></i>
+                <button class="px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold border border-gray-700 hover:border-white hover:text-white transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                    <i data-lucide="calendar" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                     Schedule a Call
                 </button>
             </div>
@@ -1138,37 +1415,38 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-black text-white py-20 border-t border-gray-800">
+    <footer class="bg-black text-white py-16 sm:py-20 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                <div class="lg:col-span-1">
+            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-12">
+                <div class="col-span-2 lg:col-span-1">
                     <div class="flex items-center gap-3 mb-6">
-                                       <div class="flex items-center gap-2 mb-6">
-    <img src="logo.webp" class="w-12 h-13 rounded-lg">
-    <span class="font-bold text-xl">Stackly</span>
-</div>
+                        <div class="flex items-center gap-2">
+                            <img src="logo.webp" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg" alt="Stackly">
+                            <span class="font-bold text-lg sm:text-xl">Stackly</span>
+                        </div>
                     </div>
                     <p class="text-gray-500 text-sm leading-relaxed mb-6">
                         Transforming businesses through innovative digital solutions. Your partner in technological excellence.
                     </p>
-                     <div class="flex gap-4">
-                        <a href="404.html" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-all hover:scale-110">
-<i class="fab fa-facebook-f"></i>                        </a>
-                        <a href="404.html" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-500 transition-all hover:scale-110">
-<i class="fab fa-instagram"></i>
+                    <div class="flex gap-3 sm:gap-4">
+                        <a href="404.html" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-all hover:scale-110">
+                            <i class="fab fa-facebook-f text-sm"></i>
                         </a>
-                        <a href="404.html" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-all hover:scale-110">
-<i class="fab fa-linkedin-in"></i>
+                        <a href="404.html" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-500 transition-all hover:scale-110">
+                            <i class="fab fa-instagram text-sm"></i>
                         </a>
-                        <a href="404.html" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-all hover:scale-110">
-<i class="fab fa-twitter"></i>
+                        <a href="404.html" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-all hover:scale-110">
+                            <i class="fab fa-linkedin-in text-sm"></i>
+                        </a>
+                        <a href="404.html" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-all hover:scale-110">
+                            <i class="fab fa-twitter text-sm"></i>
                         </a>
                     </div>
                 </div>
                 
                 <div>
-                    <h4 class="font-bold mb-6">Services</h4>
-                    <ul class="space-y-3 text-gray-500 text-sm">
+                    <h4 class="font-bold mb-4 sm:mb-6 text-sm sm:text-base">Services</h4>
+                    <ul class="space-y-2 sm:space-y-3 text-gray-500 text-xs sm:text-sm">
                         <li><a href="404.html" class="hover:text-blue-500 transition-colors">IT Consultation</a></li>
                         <li><a href="404.html" class="hover:text-blue-500 transition-colors">Blockchain</a></li>
                         <li><a href="404.html" class="hover:text-blue-500 transition-colors">Cybersecurity</a></li>
@@ -1179,38 +1457,37 @@
                 </div>
                 
                 <div>
-                    <h4 class="font-bold mb-6">Company</h4>
-                    <ul class="space-y-3 text-gray-500 text-sm">
+                    <h4 class="font-bold mb-4 sm:mb-6 text-sm sm:text-base">Company</h4>
+                    <ul class="space-y-2 sm:space-y-3 text-gray-500 text-xs sm:text-sm">
                         <li><a href="index.html" class="hover:text-blue-500 transition-colors">Home</a></li>
                         <li><a href="about.html" class="hover:text-blue-500 transition-colors">About Us</a></li>
                         <li><a href="blog.html" class="hover:text-blue-500 transition-colors">Blog</a></li>
-                        <!-- <li><a href="#" class="hover:text-blue-500 transition-colors">Case Studies</a></li> -->
                         <li><a href="contact.html" class="hover:text-blue-500 transition-colors">Contact</a></li>
                     </ul>
                 </div>
                 
-                <div>
-                    <h4 class="font-bold mb-6">Contact</h4>
-                    <ul class="space-y-3 text-gray-500 text-sm">
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="map-pin" class="w-4 h-4 text-blue-500"></i>
-                            58 Howard St, San Francisco, CA 94105
+                <div class="col-span-2 sm:col-span-1">
+                    <h4 class="font-bold mb-4 sm:mb-6 text-sm sm:text-base">Contact</h4>
+                    <ul class="space-y-2 sm:space-y-3 text-gray-500 text-xs sm:text-sm">
+                        <li class="flex items-start gap-2 sm:gap-3">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5"></i>
+                            <span>58 Howard St, San Francisco, CA 94105</span>
                         </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="mail" class="w-4 h-4 text-blue-500"></i>
-                            hello@tecko.co
+                        <li class="flex items-center gap-2 sm:gap-3">
+                            <i data-lucide="mail" class="w-4 h-4 text-blue-500 flex-shrink-0"></i>
+                            <a href="mailto:hello@tecko.co" class="hover:text-blue-500 transition-colors">hello@tecko.co</a>
                         </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="phone" class="w-4 h-4 text-blue-500"></i>
-                            +1 (555) 123-4567
+                        <li class="flex items-center gap-2 sm:gap-3">
+                            <i data-lucide="phone" class="w-4 h-4 text-blue-500 flex-shrink-0"></i>
+                            <a href="tel:+15551234567" class="hover:text-blue-500 transition-colors">+1 (555) 123-4567</a>
                         </li>
                     </ul>
                 </div>
             </div>
             
-            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-gray-600 text-sm">© 2024 Tecko. All rights reserved.</p>
-                <div class="flex items-center gap-6 text-sm text-gray-600">
+            <div class="pt-6 sm:pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-600 text-xs sm:text-sm">© 2024 Tecko. All rights reserved.</p>
+                <div class="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-600">
                     <a href="404.html" class="hover:text-white transition-colors">Privacy Policy</a>
                     <a href="404.html" class="hover:text-white transition-colors">Terms of Service</a>
                     <a href="404.html" class="hover:text-white transition-colors">Cookies</a>
@@ -1221,8 +1498,8 @@
 
     <!-- Back to Top -->
     <button id="back-to-top" onclick="scrollToTop()" 
-            class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30 transform translate-y-20 opacity-0 transition-all duration-500 hover:scale-110 z-50">
-        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+            class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30 transform translate-y-20 opacity-0 transition-all duration-500 hover:scale-110 z-50">
+        <i data-lucide="arrow-up" class="w-5 h-5 sm:w-6 sm:h-6"></i>
     </button>
 
     <script>
@@ -1232,16 +1509,30 @@
         // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        const body = document.body;
         
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
             const icon = mobileMenuBtn.querySelector('i');
             if (mobileMenu.classList.contains('hidden')) {
                 icon.setAttribute('data-lucide', 'menu');
+                body.classList.remove('mobile-menu-open');
             } else {
                 icon.setAttribute('data-lucide', 'x');
+                body.classList.add('mobile-menu-open');
             }
             lucide.createIcons();
+        });
+
+        // Close mobile menu when clicking on a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                body.classList.remove('mobile-menu-open');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
         });
 
         // Navbar Scroll
@@ -1352,25 +1643,25 @@
             ]
         };
 
-        function switchTab(category) {
+        function switchTab(category, btn) {
             // Update buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-                btn.classList.add('bg-gray-800', 'text-gray-400');
+            document.querySelectorAll('.tab-btn').forEach(button => {
+                button.classList.remove('active');
+                button.classList.add('bg-gray-800', 'text-gray-400');
             });
-            event.target.classList.add('active');
-            event.target.classList.remove('bg-gray-800', 'text-gray-400');
+            btn.classList.add('active');
+            btn.classList.remove('bg-gray-800', 'text-gray-400');
 
             // Update content
             const container = document.getElementById('tech-content');
             const data = techData[category];
             
             container.innerHTML = data.map((tech, index) => `
-                <div class="tech-card bg-[#111] border border-gray-800 rounded-2xl p-6 flex flex-col items-center gap-3 hover:border-${tech.color}-500/50 cursor-pointer group animate-scale-in" style="animation-delay: ${index * 0.05}s">
-                    <div class="w-12 h-12 bg-${tech.color}-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <i data-lucide="${tech.icon}" class="w-6 h-6 text-${tech.color}-400"></i>
+                <div class="tech-card bg-[#111] border border-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col items-center gap-2 sm:gap-3 hover:border-${tech.color}-500/50 cursor-pointer group animate-scale-in" style="animation-delay: ${index * 0.05}s">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-${tech.color}-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="${tech.icon}" class="w-5 h-5 sm:w-6 sm:h-6 text-${tech.color}-400"></i>
                     </div>
-                    <span class="font-medium text-sm">${tech.name}</span>
+                    <span class="font-medium text-xs sm:text-sm">${tech.name}</span>
                 </div>
             `).join('');
             
@@ -1402,19 +1693,23 @@
             });
         });
 
-        // Magnetic Buttons
-        const magneticElements = document.querySelectorAll('.magnetic');
-        magneticElements.forEach(elem => {
-            elem.addEventListener('mousemove', (e) => {
-                const rect = elem.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                elem.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+        // Magnetic Buttons (Desktop only)
+        const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+        
+        if (!isTouchDevice) {
+            const magneticElements = document.querySelectorAll('.magnetic');
+            magneticElements.forEach(elem => {
+                elem.addEventListener('mousemove', (e) => {
+                    const rect = elem.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    elem.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+                });
+                elem.addEventListener('mouseleave', () => {
+                    elem.style.transform = 'translate(0, 0)';
+                });
             });
-            elem.addEventListener('mouseleave', () => {
-                elem.style.transform = 'translate(0, 0)';
-            });
-        });
+        }
     </script>
 </body>
 </html>
